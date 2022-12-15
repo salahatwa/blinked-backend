@@ -14,6 +14,6 @@ public class StaticResourceConfiguration implements WebMvcConfigurer {
 //	"file:/C:/Users/alinma/Desktop/ForMyFather/backend/Blinked-template/templates/"
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resource/**").addResourceLocations(resource);
+		registry.addResourceHandler("/**").addResourceLocations(resource);
 	}
 }
