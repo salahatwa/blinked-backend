@@ -34,7 +34,7 @@ import com.blinked.modules.profile.entities.Information;
 import com.blinked.modules.profile.entities.Skill;
 import com.blinked.modules.profile.entities.Template;
 import com.blinked.modules.profile.entities.UserWebsiteUrl;
-import com.blinked.modules.profile.entities.WorkExperience;
+import com.blinked.modules.profile.entities.Work;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -89,7 +89,7 @@ public class User extends Auditable implements Serializable, Addressable {
 	private Skill skill;
 	
 	@OneToOne
-	private WorkExperience workExperience;
+	private Work work;
 
 	@OneToOne
 	private UserWebsiteUrl websiteUrl;

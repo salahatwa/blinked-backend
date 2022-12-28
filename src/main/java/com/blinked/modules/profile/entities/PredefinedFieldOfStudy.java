@@ -3,6 +3,11 @@ package com.blinked.modules.profile.entities;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class PredefinedFieldOfStudy {
 
@@ -11,22 +16,4 @@ public class PredefinedFieldOfStudy {
 
 	String degree;
 
-	public String getFieldOfStudy() {  
-		return fieldOfStudy;
-	}
-
-	public void setFieldOfStudy(String fieldOfStudy) {
-		this.fieldOfStudy = fieldOfStudy;
-	}
-
-	public String getDegree() {
-		return degree;
-	}
-
-	public void setDegree(String degree) {
-		this.degree = degree;
-	}
-	
-	
-	
 }

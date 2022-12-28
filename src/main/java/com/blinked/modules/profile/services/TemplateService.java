@@ -10,7 +10,7 @@ import com.blinked.modules.profile.entities.JobInternship;
 import com.blinked.modules.profile.entities.OtherSkill;
 import com.blinked.modules.profile.entities.Project;
 import com.blinked.modules.profile.entities.TechnicalSkill;
-import com.blinked.modules.profile.entities.Volunteer;
+import com.blinked.modules.profile.entities.WorkExperience;
 import com.blinked.modules.user.entities.User;
 
 public class TemplateService {
@@ -103,9 +103,9 @@ public class TemplateService {
 		}
 		
 		
-		if(user.getWorkExperience()!=null) {
+		if(user.getWork()!=null) {
 			
-			List<JobInternship> jobInternships = user.getWorkExperience().getJobInternships();
+			List<JobInternship> jobInternships = user.getWork().getJobInternships();
 			indexList = new ArrayList<Integer>();
 			
 			for (JobInternship jobInternship : jobInternships) {
@@ -118,13 +118,13 @@ public class TemplateService {
 				jobInternships.remove(index);
 			}
 			
-			user.getWorkExperience().setJobInternships(jobInternships);
+			user.getWork().setJobInternships(jobInternships);
 			
 			
-			List<Volunteer> volunteers = user.getWorkExperience().getVolunteers();
+			List<WorkExperience> volunteers = user.getWork().getVolunteers();
 			indexList = new ArrayList<Integer>();
 			
-			for (Volunteer volunteer : volunteers) {
+			for (WorkExperience volunteer : volunteers) {
 				if(!volunteer.getView()) {
 					indexList.add( volunteers.indexOf(volunteer) );
 				}
@@ -134,10 +134,10 @@ public class TemplateService {
 				volunteers.remove(index);
 			}
 			
-			user.getWorkExperience().setVolunteers(volunteers);
+			user.getWork().setVolunteers(volunteers);
 			
 			
-			List<Project> projects = user.getWorkExperience().getProjects();
+			List<Project> projects = user.getWork().getProjects();
 			indexList = new ArrayList<Integer>();
 			
 			for (Project project : projects) {
@@ -150,7 +150,7 @@ public class TemplateService {
 				projects.remove(index);
 			}
 			
-			user.getWorkExperience().setProjects(projects);
+			user.getWork().setProjects(projects);
 			
 		}
 		

@@ -17,7 +17,7 @@ import com.blinked.modules.profile.entities.SocialInformation;
 import com.blinked.modules.profile.entities.TechnicalSkill;
 import com.blinked.modules.profile.entities.Template;
 import com.blinked.modules.profile.entities.UserWebsiteUrl;
-import com.blinked.modules.profile.entities.Volunteer;
+import com.blinked.modules.profile.entities.WorkExperience;
 import com.blinked.modules.user.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
@@ -52,13 +52,13 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query("select user.education.certification from User user where user.id=?1")
 	List<Certification> getAllCertifications(Long userId);
 
-	@Query("select user.workExperience.jobInternships from User user where user.id=?1")
+	@Query("select user.work.jobInternships from User user where user.id=?1")
 	List<JobInternship> getAllJobInternship(Long userId);
 
-	@Query("select user.workExperience.volunteers from User user where user.id=?1")
-	List<Volunteer> getAllVolunteers(Long userId);
+	@Query("select user.work.volunteers from User user where user.id=?1")
+	List<WorkExperience> getAllVolunteers(Long userId);
 
-	@Query("select user.workExperience.projects from User user where user.id=?1")
+	@Query("select user.work.projects from User user where user.id=?1")
 	List<Project> getAllProjects(Long userId);
 
 	@Query("select user.template from User user where user.id=?1")

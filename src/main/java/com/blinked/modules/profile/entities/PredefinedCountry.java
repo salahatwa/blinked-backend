@@ -4,6 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Table(name = "countries")
 @Entity
 public class PredefinedCountry {
@@ -17,38 +22,5 @@ public class PredefinedCountry {
 	
 	private String phoneCode;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getShortname() {
-		return shortname;
-	}
-
-	public void setShortname(String shortname) {
-		this.shortname = shortname;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPhoneCode() {
-		return phoneCode;
-	}
-
-	public void setPhoneCode(String phoneCode) {
-		this.phoneCode = phoneCode;
-	}
-	
-	
 	
 }

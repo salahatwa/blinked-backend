@@ -32,7 +32,7 @@ public class ProfileGetDtlsController {
 	@Transactional
 	public Profile saveGraduation(@CurrentUser Authorized authorized) throws SQLException, IOException {
 
-		User user = userRepository.findById(authorized.getId()).get();
+		User user = userRepository.getReferenceById(authorized.getId());
 
 		return new ConvertToFrontEndUser().convertUserToProfile(user);
 	}

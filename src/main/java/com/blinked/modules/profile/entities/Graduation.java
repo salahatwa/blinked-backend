@@ -6,6 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Graduation {
 
@@ -41,112 +46,8 @@ public class Graduation {
 	@Column(name = "completionMonth_expectedMonth")
 	private String completionMonth;
 
-	//, columnDefinition = "boolean default true"
+	// , columnDefinition = "boolean default true"
 	@Column(name = "view", nullable = false)
 	private Boolean view = true;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getUniversityName() {
-		return universityName;
-	}
-
-	public void setUniversityName(String universityName) {
-		this.universityName = universityName;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getDegree() {
-		return degree;
-	}
-
-	public void setDegree(String degree) {
-		this.degree = degree;
-	}
-
-	public String getFiledOfStudy() {
-		return filedOfStudy;
-	}
-
-	public void setFiledOfStudy(String filedOfStudy) {
-		this.filedOfStudy = filedOfStudy;
-	}
-
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-	public Boolean getCurrentStatus() {
-		return currentStatus;
-	}
-
-	public void setCurrentStatus(Boolean currentStatus) {
-		this.currentStatus = currentStatus;
-	}
-
-	public String getCompletionYear() {
-		return completionYear;
-	}
-
-	public void setCompletionYear(String completionYear) {
-		this.completionYear = completionYear;
-	}
-
-	public String getCompletionMonth() {
-		return completionMonth;
-	}
-
-	public void setCompletionMonth(String completionMonth) {
-		this.completionMonth = completionMonth;
-	}
-
-	public Boolean getView() {
-		return view;
-	}
-
-	public void setView(Boolean view) {
-		this.view = view;
-	}
 
 }

@@ -1,14 +1,16 @@
 package com.blinked.modules.profile.entities;
 
-import java.sql.Blob;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 public class Certification {
 
@@ -27,8 +29,7 @@ public class Certification {
 	@Column(name = "certificationMonth")
 	private String month;
 
-	@Lob
-	private Blob attachment;
+	private String attachment;
 
 	private String typeOfAttachment;
 
@@ -36,77 +37,5 @@ public class Certification {
 
 	@Column(name = "view", nullable = false)
 	private Boolean view = true;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getInstituteName() {
-		return instituteName;
-	}
-
-	public void setInstituteName(String instituteName) {
-		this.instituteName = instituteName;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
-	public String getMonth() {
-		return month;
-	}
-
-	public void setMonth(String month) {
-		this.month = month;
-	}
-
-	public Blob getAttachment() {
-		return attachment;
-	}
-
-	public void setAttachment(Blob attachment) {
-		this.attachment = attachment;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getTypeOfAttachment() {
-		return typeOfAttachment;
-	}
-
-	public void setTypeOfAttachment(String typeOfAttachment) {
-		this.typeOfAttachment = typeOfAttachment;
-	}
-
-	public Boolean getView() {
-		return view;
-	}
-
-	public void setView(Boolean view) {
-		this.view = view;
-	}
 
 }

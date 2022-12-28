@@ -1,17 +1,17 @@
 package com.blinked.modules.core.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 @Component
 public class InternationalizationUtils {
 
-	public static ReloadableResourceBundleMessageSource messageSource;
+	public static MessageSource messageSource;
 
 	@Autowired
-	public InternationalizationUtils(ReloadableResourceBundleMessageSource resourceBundleMessageSource) {
+	public InternationalizationUtils(MessageSource resourceBundleMessageSource) {
 		InternationalizationUtils.messageSource = resourceBundleMessageSource;
 	}
 

@@ -8,38 +8,32 @@ import com.blinked.modules.profile.entities.PersonalInformation;
 
 public class PersonalInformationService {
 
-	private BlobToBase64EncoderAndDecoder converter = new BlobToBase64EncoderAndDecoder();
-	
 	public FrontEndPersonalInformation convertBackEndPersonalInfoToFrontEndPersonalInfo(
 			PersonalInformation personalInformation) throws SQLException, IOException {
-		
+
 		FrontEndPersonalInformation frontEndPersonalInformation = new FrontEndPersonalInformation();
-		frontEndPersonalInformation.setId( personalInformation.getId() );
-		frontEndPersonalInformation.setName( personalInformation.getName() );
-		frontEndPersonalInformation.setPicture( converter.convertBlobToBase64( personalInformation.getPicture() ) );
-		frontEndPersonalInformation.setSummary( personalInformation.getSummary() );
-		frontEndPersonalInformation.setTitle( personalInformation.getTitle() );
-		frontEndPersonalInformation.setTypePicture( personalInformation.getTypePicture() );
-		    
-		
+		frontEndPersonalInformation.setId(personalInformation.getId());
+		frontEndPersonalInformation.setName(personalInformation.getName());
+		frontEndPersonalInformation.setPicture(personalInformation.getPicture());
+		frontEndPersonalInformation.setSummary(personalInformation.getSummary());
+		frontEndPersonalInformation.setTitle(personalInformation.getTitle());
+		frontEndPersonalInformation.setTypePicture(personalInformation.getTypePicture());
+
 		return frontEndPersonalInformation;
 	}
 
 	public PersonalInformation convertFrontEndPersonalInfoToBackEndPersonalInfo(
 			FrontEndPersonalInformation frontEndPersonalInformation) throws IOException {
-		
-		
-	    PersonalInformation personalInformation = new PersonalInformation();
-	    personalInformation.setId( frontEndPersonalInformation.getId() );
-	    personalInformation.setName( frontEndPersonalInformation.getName() );
-	    personalInformation.setPicture( converter.convertBase64ToBlob( frontEndPersonalInformation.getPicture().toString() , frontEndPersonalInformation.getTypePicture()) );
-	    personalInformation.setSummary( frontEndPersonalInformation.getSummary() );
-	    personalInformation.setTitle( frontEndPersonalInformation.getTitle() );
-	    personalInformation.setTypePicture( personalInformation.getTypePicture() );
-	    
+
+		PersonalInformation personalInformation = new PersonalInformation();
+		personalInformation.setId(frontEndPersonalInformation.getId());
+		personalInformation.setName(frontEndPersonalInformation.getName());
+		personalInformation.setPicture(frontEndPersonalInformation.getPicture());
+		personalInformation.setSummary(frontEndPersonalInformation.getSummary());
+		personalInformation.setTitle(frontEndPersonalInformation.getTitle());
+		personalInformation.setTypePicture(personalInformation.getTypePicture());
+
 		return personalInformation;
 	}
 
-	
-	
 }

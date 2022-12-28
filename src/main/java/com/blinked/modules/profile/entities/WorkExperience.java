@@ -1,60 +1,50 @@
 package com.blinked.modules.profile.entities;
 
-import java.util.List;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
+@Table(name = "workExperience")
 public class WorkExperience {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@OneToMany
-	private List<JobInternship> jobInternships;
-	
-	@OneToMany
-	private List<Volunteer> volunteers;
-	
-	@OneToMany
-	private List<Project> projects;
 
-	public Long getId() {
-		return id;
-	}
+	@Column(name = "role")
+	private String role;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@Column(name = "organizationName")
+	private String organization;
 
-	public List<JobInternship> getJobInternships() {
-		return jobInternships;
-	}
+	private String startMonth;
 
-	public void setJobInternships(List<JobInternship> jobInternships) {
-		this.jobInternships = jobInternships;
-	}
+	private String startYear;
 
-	public List<Volunteer> getVolunteers() {
-		return volunteers;
-	}
+	@Column(name = "currentlyWorkHere")
+	private Boolean currentStatus;
 
-	public void setVolunteers(List<Volunteer> volunteers) {
-		this.volunteers = volunteers;
-	}
+	private String endMonth;
 
-	public List<Project> getProjects() {
-		return projects;
-	}
+	private String endYear;
 
-	public void setProjects(List<Project> projects) {
-		this.projects = projects;
-	}
-	
-	
+	@Column(name = "describeYourWork")
+	private String description;
+
+	@Column(name = "attachment")
+	private String attachment;
+
+	private String typeOfAttachment;
+
+	@Column(name = "view", nullable = false)
+	private Boolean view = true;
 }
