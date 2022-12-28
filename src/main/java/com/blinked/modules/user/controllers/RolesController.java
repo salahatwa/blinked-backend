@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @Tag(name = "Roles")
 @RequestMapping("/api/roles")
-//@PreAuthorize("hasAnyAuthority('ADM')")
 public class RolesController {
 
 	@Autowired
@@ -30,12 +30,10 @@ public class RolesController {
 
 	@GetMapping
 	@Operation(summary = "Returns a list of roles")
+	@PreAuthorize("hasAnyAuthority('ADM')")
 	public ResponseEntity<List<RoleInformation>> index() {
 		return ok(repository.findAll().stream().map(RoleInformation::new).collect(Collectors.toList()));
 	}
-	
-	
-//	
 	
 	
 	@GetMapping(value = "/test")

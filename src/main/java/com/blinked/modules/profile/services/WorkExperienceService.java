@@ -3,12 +3,12 @@ package com.blinked.modules.profile.services;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import com.blinked.modules.profile.dtos.FrontEndVolunteer;
+import com.blinked.modules.profile.dtos.FrontEndExperience;
 import com.blinked.modules.profile.entities.WorkExperience;
 
 public class WorkExperienceService {
 
-	public WorkExperience FrontEndVolunteerToBackEndVolunteer(FrontEndVolunteer frontEndVolunteer,
+	public WorkExperience FrontEndVolunteerToBackEndVolunteer(FrontEndExperience frontEndVolunteer,
 			WorkExperience volunteer) throws IOException {
 
 		volunteer.setId(frontEndVolunteer.getId());
@@ -28,10 +28,10 @@ public class WorkExperienceService {
 
 	}
 
-	public FrontEndVolunteer BackEndVolunteerToFrontEndVolunteer(WorkExperience volunteer)
+	public FrontEndExperience BackEndVolunteerToFrontEndVolunteer(WorkExperience volunteer)
 			throws IOException, SQLException {
 
-		FrontEndVolunteer frontEndVolunteer = new FrontEndVolunteer();
+		FrontEndExperience frontEndVolunteer = new FrontEndExperience();
 
 		frontEndVolunteer.setId(volunteer.getId());
 		frontEndVolunteer.setRole(volunteer.getRole());

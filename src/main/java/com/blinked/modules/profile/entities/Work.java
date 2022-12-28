@@ -24,7 +24,7 @@ public class Work {
 	private List<JobInternship> jobInternships;
 
 	@OneToMany
-	private List<WorkExperience> volunteers;
+	private List<WorkExperience> experiences;
 
 	@OneToMany
 	private List<Project> projects;

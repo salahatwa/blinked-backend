@@ -9,7 +9,7 @@ import com.blinked.modules.profile.dtos.FrontEndCertificate;
 import com.blinked.modules.profile.dtos.FrontEndCourse;
 import com.blinked.modules.profile.dtos.FrontEndJobInternship;
 import com.blinked.modules.profile.dtos.FrontEndProject;
-import com.blinked.modules.profile.dtos.FrontEndVolunteer;
+import com.blinked.modules.profile.dtos.FrontEndExperience;
 import com.blinked.modules.profile.dtos.Profile;
 import com.blinked.modules.profile.entities.Certification;
 import com.blinked.modules.profile.entities.Course;
@@ -40,7 +40,7 @@ public class ConvertToFrontEndUser {
 		frontEndUser.setName(user.getName());
 		frontEndUser.setMail(user.getEmail());
 		frontEndUser.setPassword(user.getPassword());
-		frontEndUser.setTemplate(user.getTemplate());
+//		frontEndUser.setTemplate(user.getTemplate());
 
 		if (user.getInformation() != null) {
 
@@ -105,10 +105,10 @@ public class ConvertToFrontEndUser {
 			}
 			frontEndUser.setJobInternships(jobInternships);
 
-			List<FrontEndVolunteer> volunteers = new ArrayList<FrontEndVolunteer>();
-			for (WorkExperience volunteer : user.getWork().getVolunteers()) {
+			List<FrontEndExperience> volunteers = new ArrayList<FrontEndExperience>();
+			for (WorkExperience volunteer : user.getWork().getExperiences()) {
 
-				FrontEndVolunteer v = volunteerService.BackEndVolunteerToFrontEndVolunteer(volunteer);
+				FrontEndExperience v = volunteerService.BackEndVolunteerToFrontEndVolunteer(volunteer);
 
 				v.setAttachment("data:application/pdf;base64," + v.getAttachment());
 

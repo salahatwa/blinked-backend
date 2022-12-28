@@ -33,7 +33,6 @@ import com.blinked.modules.profile.entities.Education;
 import com.blinked.modules.profile.entities.Information;
 import com.blinked.modules.profile.entities.Skill;
 import com.blinked.modules.profile.entities.Template;
-import com.blinked.modules.profile.entities.UserWebsiteUrl;
 import com.blinked.modules.profile.entities.Work;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -53,7 +52,7 @@ public class User extends Auditable implements Serializable, Addressable {
 
 	@Column(name = "name", nullable = false)
 	private String name;
-	
+
 	@Column(name = "username", nullable = true)
 	private String username;
 
@@ -68,31 +67,25 @@ public class User extends Auditable implements Serializable, Addressable {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	
 	@ManyToMany(cascade = DETACH, fetch = LAZY)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	@JsonIgnore
 	private List<Role> roles;
+
 	
-	
-	@OneToOne
-	private Template template;
-	
-	@OneToOne
-	private Information information;
-	
-	@OneToOne
-	private Education education;
-	
-	@OneToOne
-	private Skill skill;
-	
-	@OneToOne
-	private Work work;
 
 	@OneToOne
-	private UserWebsiteUrl websiteUrl;
+	private Information information;
+
+	@OneToOne
+	private Education education;
+
+	@OneToOne
+	private Skill skill;
+
+	@OneToOne
+	private Work work;
 
 	public User() {
 	}

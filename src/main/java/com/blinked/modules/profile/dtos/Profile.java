@@ -46,7 +46,7 @@ public class Profile {
 	
 	private List<FrontEndJobInternship> jobInternships;
 	
-	private List<FrontEndVolunteer> volunteers;
+	private List<FrontEndExperience> volunteers;
 	
 	private List<FrontEndProject> projects;
 
@@ -162,11 +162,11 @@ public class Profile {
 		this.jobInternships = jobInternships;
 	}
 
-	public List<FrontEndVolunteer> getVolunteers() {
+	public List<FrontEndExperience> getVolunteers() {
 		return volunteers;
 	}
 
-	public void setVolunteers(List<FrontEndVolunteer> volunteers) {
+	public void setVolunteers(List<FrontEndExperience> volunteers) {
 		this.volunteers = volunteers;
 	}
 

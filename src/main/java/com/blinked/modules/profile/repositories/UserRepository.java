@@ -55,20 +55,18 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query("select user.work.jobInternships from User user where user.id=?1")
 	List<JobInternship> getAllJobInternship(Long userId);
 
-	@Query("select user.work.volunteers from User user where user.id=?1")
-	List<WorkExperience> getAllVolunteers(Long userId);
+	@Query("select user.work.experiences from User user where user.id=?1")
+	List<WorkExperience> getAllExperiences(Long userId);
 
 	@Query("select user.work.projects from User user where user.id=?1")
 	List<Project> getAllProjects(Long userId);
 
-	@Query("select user.template from User user where user.id=?1")
-	Template getTemplateByUserId(Long uId);
+//	@Query("select user.template from User user where user.id=?1")
+//	Template getTemplateByUserId(Long uId);
 
-	@Query("select user.websiteUrl from User user where user.id=?1")
-	UserWebsiteUrl getUserWebsiteUrl(Long userId);
 
-	@Query("select user from User user where user.websiteUrl.url=?1")
-	User getUserIdFromuserUserUrl(String url);
+	@Query("select user from UserWebsiteUrl user where user.userId=?1")
+	List<UserWebsiteUrl> getUserWebsiteUrls(String url);
 
 	@Query("Select user from User user where user.username=?1")
 	User checkIfUsernameExists(String username);

@@ -121,20 +121,20 @@ public class TemplateService {
 			user.getWork().setJobInternships(jobInternships);
 			
 			
-			List<WorkExperience> volunteers = user.getWork().getVolunteers();
+			List<WorkExperience> experiences = user.getWork().getExperiences();
 			indexList = new ArrayList<Integer>();
 			
-			for (WorkExperience volunteer : volunteers) {
-				if(!volunteer.getView()) {
-					indexList.add( volunteers.indexOf(volunteer) );
+			for (WorkExperience experience : experiences) {
+				if(!experience.getView()) {
+					indexList.add( experiences.indexOf(experience) );
 				}
 			}
 			
 			for (int index : indexList) {
-				volunteers.remove(index);
+				experiences.remove(index);
 			}
 			
-			user.getWork().setVolunteers(volunteers);
+			user.getWork().setExperiences(experiences);
 			
 			
 			List<Project> projects = user.getWork().getProjects();

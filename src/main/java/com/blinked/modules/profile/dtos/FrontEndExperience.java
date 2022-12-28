@@ -1,6 +1,6 @@
 package com.blinked.modules.profile.dtos;
 
-public class FrontEndVolunteer {
+public class FrontEndExperience {
 
 	private Long id;
 	

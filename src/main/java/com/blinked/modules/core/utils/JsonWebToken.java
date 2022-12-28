@@ -33,6 +33,7 @@ public class JsonWebToken {
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		String joinedRolesString = decoded.getBody().get(SecurityEnvironments.ROLES_KEY_ON_JWT).toString().trim();
 
+		System.out.println("roles:"+joinedRolesString);
 		if (nonNull(joinedRolesString) && StringUtils.isNoneBlank(joinedRolesString)) {
 			String[] roles = joinedRolesString.split(",");
 			authorities = stream(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList());

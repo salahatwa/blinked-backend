@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blinked.modules.core.secuirty.CurrentUser;
-import com.blinked.modules.profile.dtos.FrontEndVolunteer;
+import com.blinked.modules.profile.dtos.FrontEndExperience;
 import com.blinked.modules.profile.entities.Work;
 import com.blinked.modules.profile.entities.WorkExperience;
 import com.blinked.modules.profile.repositories.UserRepository;
@@ -48,7 +48,7 @@ public class WorkController {
 	@PostMapping
 	@Operation(summary = "Save Work Experience")
 	public Long saveWorkExperience(@CurrentUser Authorized authorized,
-			@RequestBody FrontEndVolunteer fronEndVolunteer) {
+			@RequestBody FrontEndExperience fronEndVolunteer) {
 
 		try {
 
@@ -66,15 +66,15 @@ public class WorkController {
 				workExperience = workRepository.save(workExperience);
 			}
 
-			List<WorkExperience> volunteers = workExperience.getVolunteers();
+			List<WorkExperience> experiences = workExperience.getExperiences();
 
-			if (volunteers == null) {
-				volunteers = new ArrayList<WorkExperience>();
+			if (experiences == null) {
+				experiences = new ArrayList<WorkExperience>();
 			}
 
-			volunteers.add(volunteer);
+			experiences.add(volunteer);
 
-			workExperience.setVolunteers(volunteers);
+			workExperience.setExperiences(experiences);
 
 			user.setWork(workExperience);
 
@@ -91,7 +91,7 @@ public class WorkController {
 
 	@PutMapping
 	@Operation(summary = "Update Work Experience")
-	public Long editSaveWorkExperience(@RequestBody FrontEndVolunteer frontEndVolunteer) {
+	public Long editSaveWorkExperience(@RequestBody FrontEndExperience frontEndVolunteer) {
 
 		WorkExperience volunteer;
 		try {
@@ -108,7 +108,7 @@ public class WorkController {
 
 	@GetMapping("/{workExperienceId}")
 	@Operation(summary = "Get Work Experience By Id")
-	public FrontEndVolunteer getWorkExperience(@PathVariable("workExperienceId") Long workExperienceId) {
+	public FrontEndExperience getWorkExperience(@PathVariable("workExperienceId") Long workExperienceId) {
 
 		WorkExperience volunteer = workExperienceRepository.getReferenceById(workExperienceId);
 		try {
@@ -127,20 +127,20 @@ public class WorkController {
 
 	@GetMapping("/list")
 	@Operation(summary = "Get Work Experience List")
-	public List<FrontEndVolunteer> getAllWorkExperiences(@CurrentUser Authorized authorized) {
+	public List<FrontEndExperience> getAllWorkExperiences(@CurrentUser Authorized authorized) {
 
 		try {
 
-			List<WorkExperience> volunteers = userRepository.getAllVolunteers(authorized.getId());
-			List<FrontEndVolunteer> frontEndVolunteers = new ArrayList<FrontEndVolunteer>();
+			List<WorkExperience> experiences = userRepository.getAllExperiences(authorized.getId());
+			List<FrontEndExperience> frontEndExperiences = new ArrayList<FrontEndExperience>();
 
-			for (WorkExperience volunteer : volunteers) {
+			for (WorkExperience experience : experiences) {
 
-				frontEndVolunteers.add(experienceService.BackEndVolunteerToFrontEndVolunteer(volunteer));
+				frontEndExperiences.add(experienceService.BackEndVolunteerToFrontEndVolunteer(experience));
 
 			}
 
-			return frontEndVolunteers;
+			return frontEndExperiences;
 
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();

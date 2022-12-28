@@ -22,7 +22,6 @@ public class Authorization {
             return null;
         }
 
-        System.out.println("22Token:"+token.substring(BEARER_WORD_LENGTH));
         return token.substring(BEARER_WORD_LENGTH);
     }
 

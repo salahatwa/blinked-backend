@@ -28,7 +28,7 @@ public class TipsController {
 		User user = userRepository.getReferenceById(authorized.getId());
 
 		if (user.getEducation() == null && user.getInformation() == null && user.getSkill() == null
-				&& user.getTemplate() == null && user.getWork() == null)
+				 && user.getWork() == null)
 			return true;
 
 		return false;

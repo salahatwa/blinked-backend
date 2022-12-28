@@ -1,16 +1,32 @@
 package com.blinked.app.apis;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
+import com.blinked.modules.profile.dtos.Profile;
+import com.blinked.modules.profile.entities.UserWebsiteUrl;
+import com.blinked.modules.profile.repositories.UserRepository;
+import com.blinked.modules.profile.repositories.UserWebsiteUrlRepository;
+import com.blinked.modules.profile.services.ConvertToFrontEndUser;
+import com.blinked.modules.user.entities.User;
+
 @Controller
 public class TestAPI {
+
+	@Autowired
+	UserWebsiteUrlRepository userWebsiteUrlRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	private String getSubdomain(HttpServletRequest req) {
 
@@ -26,16 +42,21 @@ public class TestAPI {
 	}
 
 	@GetMapping("/")
-	public String view(Model model, HttpServletRequest request, @RequestHeader("x-custom-referrer") String userId) {
+	public String view(Model model, HttpServletRequest request,
+			@RequestHeader(name = "x-custom-referrer", required = false) String siteId) throws SQLException, IOException {
 
-		System.out.println("Before User Id:" + userId);
-		if (Objects.isNull(userId))
-			userId = getSubdomain(request);
+		System.out.println("Before User Id:" + siteId);
+		if (Objects.isNull(siteId))
+			siteId = getSubdomain(request);
 
-		System.out.println("User Id:" + userId);
-//		User user = userRepository.getUserIdFromuserUserUrl(url);
-//		
-//		user = templateService.setupUserAccordingToView(user);
+		System.out.println("Site Id:" + siteId);
+
+		UserWebsiteUrl site = userWebsiteUrlRepository.getIdFromUrl(siteId);
+
+		User user = userRepository.getReferenceById(site.getUserId());
+
+		Profile profile=new ConvertToFrontEndUser().convertUserToProfile(user);
+		//		user = templateService.setupUserAccordingToView(user);
 
 //		FrontEndUser fronEndUser = new FrontEndUser();
 //		fronEndUser.setName("Salah At");
@@ -47,8 +68,8 @@ public class TestAPI {
 //		info.setTitle("Senior dev");
 //		fronEndUser.setPersonalInformation(info);
 //
-//		model.addAttribute("user", fronEndUser);
+		model.addAttribute("user", profile);
 
-		return "template_folder/" + userId + "/index";
+		return "template_folder/" + site.getTemplate().getLivePath() + "/index";
 	}
 }
