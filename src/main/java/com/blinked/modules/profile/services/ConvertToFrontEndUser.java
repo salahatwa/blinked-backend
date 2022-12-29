@@ -46,8 +46,10 @@ public class ConvertToFrontEndUser {
 
 			frontEndUser.setContactInformation(user.getInformation().getContactInformation());
 
-			frontEndUser.setPersonalInformation(personalInformationService
-					.convertBackEndPersonalInfoToFrontEndPersonalInfo(user.getInformation().getPersonalInformation()));
+			if (user.getInformation().getPersonalInformation() != null)
+				frontEndUser.setPersonalInformation(
+						personalInformationService.convertBackEndPersonalInfoToFrontEndPersonalInfo(
+								user.getInformation().getPersonalInformation()));
 
 			frontEndUser.getPersonalInformation()
 					.setPicture("data:image/png;base64," + frontEndUser.getPersonalInformation().getPicture());

@@ -11,8 +11,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,7 +47,6 @@ public class UserWebsiteUrl {
 	private SiteStatus status;
 
 	@OneToOne
-	@JsonIgnore
 	private Template template;
 
 }

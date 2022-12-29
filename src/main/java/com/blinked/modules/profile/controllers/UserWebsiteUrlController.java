@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,23 +32,30 @@ public class UserWebsiteUrlController {
 
 	@Autowired
 	UserWebsiteUrlRepository userWebsiteUrlRepository;
-	
+
 	@Autowired
 	TemplateRepository templateRepository;
 
-	@PostMapping("/save-site-template-for-user/{templateId}")
+	@PostMapping("/save-site-for-user")
 	@Operation(summary = "Save User Website Url")
 	public UserWebsiteUrl saveUserWebsiteUrl(@CurrentUser Authorized authorized,
-			@RequestBody UserWebsiteUrl userWebsiteUrl,@PathVariable("templateId") Long templateId) {
-
-		
-		Template template = templateRepository.getReferenceById(templateId);
-		
-		userWebsiteUrl.setTemplate(template);
+			@RequestBody UserWebsiteUrl userWebsiteUrl) {
 		userWebsiteUrl.setUserId(authorized.getId());
 		userWebsiteUrl = userWebsiteUrlRepository.save(userWebsiteUrl);
 
 		return userWebsiteUrl;
+	}
+
+	@PutMapping("/assign-template-for-site/{websiteId}/{templateId}")
+	@Operation(summary = "Assign Template for Website Url")
+	public UserWebsiteUrl assignTemplateUserWebsiteUrl(@CurrentUser Authorized authorized,
+			@PathVariable("websiteId") Long websiteId, @PathVariable("templateId") Long templateId) {
+
+		Template template = templateRepository.getReferenceById(templateId);
+		UserWebsiteUrl userWebsiteUrl = userWebsiteUrlRepository.getReferenceById(websiteId);
+		userWebsiteUrl.setTemplate(template);
+
+		return userWebsiteUrlRepository.save(userWebsiteUrl);
 	}
 
 	@GetMapping

@@ -3,6 +3,8 @@ package com.blinked.modules.profile.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +50,8 @@ public class SkillController {
 	public TechnicalSkill saveTechnicalSkill(@CurrentUser Authorized authorized,
 			@RequestBody TechnicalSkill technicalSkill) {
 
-		System.out.println(technicalSkill.getName());
-
 		User user = userRepository.getReferenceById(authorized.getId());
+
 		Skill skill = user.getSkill();
 
 		if (skill == null) {
@@ -83,9 +84,14 @@ public class SkillController {
 		return userRepository.getAllTechnicalSkills(authorized.getId());
 	}
 
+	@Transactional
 	@DeleteMapping("/technical-skill/{technicalSkillId}")
 	@Operation(summary = "Delete Technical Skill By Id")
-	public void deleteTechnicalSkillById(@PathVariable("technicalSkillId") Long technicalSkillId) {
+	public void deleteTechnicalSkillById(@CurrentUser Authorized authorized,@PathVariable("technicalSkillId") Long technicalSkillId) {
+
+//		User user = userRepository.getReferenceById(authorized.getId());
+//
+//		List<TechnicalSkill> skill = user.getSkill().getTechnicalSkills();
 		technicalSkillRepository.deleteById(technicalSkillId);
 	}
 
@@ -128,61 +134,59 @@ public class SkillController {
 	public void deleteOtherSkillById(@PathVariable("otherSkillId") Long otherSkillId) {
 		otherSkillRepository.deleteById(otherSkillId);
 	}
-	
-	
+
 	@PostMapping("/technical-skill/update/view/{technicalSkillId}")
 	@Operation(summary = "Change View Technical Skill")
 	public Long changeViewTechnicalSkill(@PathVariable("technicalSkillId") Long technicalSkillId) {
-		
+
 		TechnicalSkill technicalSkill = technicalSkillRepository.getReferenceById(technicalSkillId);
-		
-		if(technicalSkill!=null) {
+
+		if (technicalSkill != null) {
 			Boolean view = technicalSkill.getView();
-			
-			if(view==true) {
+
+			if (view == true) {
 				technicalSkill.setView(false);
 				technicalSkill = technicalSkillRepository.save(technicalSkill);
-				System.out.println("hello1 : "+technicalSkill.getId());
+				System.out.println("hello1 : " + technicalSkill.getId());
 				return technicalSkill.getId();
-			}else {
+			} else {
 				technicalSkill.setView(true);
 				technicalSkill = technicalSkillRepository.save(technicalSkill);
-				System.out.println("hello2: "+technicalSkill.getId());
+				System.out.println("hello2: " + technicalSkill.getId());
 				return technicalSkill.getId();
 			}
-		 
+
 		}
-		
+
 		return null;
-		
+
 	}
-	
-	
+
 	@PostMapping("/other-skill/update/view/{otherSkillId}")
 	@Operation(summary = "Change View Other Skill")
 	public Long changeViewOtherSkill(@PathVariable("otherSkillId") Long otherSkillId) {
-		
+
 		OtherSkill otherSkill = otherSkillRepository.getReferenceById(otherSkillId);
-		
-		if(otherSkill!=null) {
+
+		if (otherSkill != null) {
 			Boolean view = otherSkill.getView();
-			
-			if(view==true) {
+
+			if (view == true) {
 				otherSkill.setView(false);
 				otherSkill = otherSkillRepository.save(otherSkill);
-				System.out.println("hello1 : "+otherSkill.getId());
+				System.out.println("hello1 : " + otherSkill.getId());
 				return otherSkill.getId();
-			}else {
+			} else {
 				otherSkill.setView(true);
 				otherSkill = otherSkillRepository.save(otherSkill);
-				System.out.println("hello2: "+otherSkill.getId());
+				System.out.println("hello2: " + otherSkill.getId());
 				return otherSkill.getId();
 			}
-		 
+
 		}
-		
+
 		return null;
-		
+
 	}
 
 }
