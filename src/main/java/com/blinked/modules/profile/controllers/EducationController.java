@@ -112,8 +112,10 @@ public class EducationController {
 
 	@DeleteMapping("/graduation/{graduationId}")
 	@Operation(summary = "Delete Graduation")
-	public void deleteGraduation(@PathVariable("graduationId") Long graduationId) {
-		graduationRepository.deleteById(graduationId);
+	public void deleteGraduation(@CurrentUser Authorized authorized, @PathVariable("graduationId") Long graduationId) {
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getEducation().getGraduations().remove(graduationRepository.getReferenceById(graduationId));
+		userRepository.save(user);
 	}
 
 	@GetMapping("/graduation/list")
@@ -222,8 +224,10 @@ public class EducationController {
 
 	@DeleteMapping("/course/{courseId}")
 	@Operation(summary = "Delete Course")
-	public void deleteCourse(@PathVariable("courseId") Long courseId) {
-		courseRepository.deleteById(courseId);
+	public void deleteCourse(@CurrentUser Authorized authorized, @PathVariable("courseId") Long courseId) {
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getEducation().getCourses().remove(courseRepository.getReferenceById(courseId));
+		userRepository.save(user);
 	}
 
 	@GetMapping("/course/list")
@@ -345,8 +349,11 @@ public class EducationController {
 
 	@DeleteMapping("/certification/{certificationId}")
 	@Operation(summary = "Delete Certification")
-	public void deleteCertification(@PathVariable("certificationId") Long certificationId) {
-		certificateRepository.deleteById(certificationId);
+	public void deleteCertification(@CurrentUser Authorized authorized,
+			@PathVariable("certificationId") Long certificationId) {
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getEducation().getCertification().remove(certificateRepository.getReferenceById(certificationId));
+		userRepository.save(user);
 	}
 
 	@GetMapping("/certification/list")

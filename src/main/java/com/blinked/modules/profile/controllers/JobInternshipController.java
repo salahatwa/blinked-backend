@@ -119,8 +119,11 @@ public class JobInternshipController {
 
 	@DeleteMapping("/{jobInternshipId}")
 	@Operation(summary = "Delete JobInternship By Id")
-	public void deleteJobInternship(@PathVariable("jobInternshipId") Long jobInternshipId) {
-		jobInternshipRepository.deleteById(jobInternshipId);
+	public void deleteJobInternship(@CurrentUser Authorized authorized,
+			@PathVariable("jobInternshipId") Long jobInternshipId) {
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getWork().getJobInternships().remove(jobInternshipRepository.getReferenceById(jobInternshipId));
+		userRepository.save(user);
 	}
 
 	@GetMapping("/list")

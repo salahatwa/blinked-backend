@@ -52,10 +52,10 @@ public class WorkController {
 
 		try {
 
-			WorkExperience volunteer = experienceService.FrontEndVolunteerToBackEndVolunteer(fronEndVolunteer,
+			WorkExperience experience = experienceService.FrontEndVolunteerToBackEndVolunteer(fronEndVolunteer,
 					new WorkExperience());
 
-			volunteer = workExperienceRepository.save(volunteer);
+			experience = workExperienceRepository.save(experience);
 
 			User user = userRepository.getReferenceById(authorized.getId());
 
@@ -72,7 +72,7 @@ public class WorkController {
 				experiences = new ArrayList<WorkExperience>();
 			}
 
-			experiences.add(volunteer);
+			experiences.add(experience);
 
 			workExperience.setExperiences(experiences);
 
@@ -80,7 +80,7 @@ public class WorkController {
 
 			userRepository.save(user);
 
-			return volunteer.getId();
+			return experience.getId();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -121,8 +121,11 @@ public class WorkController {
 
 	@DeleteMapping("/{workExperienceId}")
 	@Operation(summary = "Delete Work Experience By Id")
-	public void deleteWorkExperience(@PathVariable("workExperienceId") Long volunteerId) {
-		workExperienceRepository.deleteById(volunteerId);
+	public void deleteWorkExperience(@CurrentUser Authorized authorized,
+			@PathVariable("workExperienceId") Long workExperienceId) {
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getWork().getExperiences().remove(workExperienceRepository.getReferenceById(workExperienceId));
+		userRepository.save(user);
 	}
 
 	@GetMapping("/list")

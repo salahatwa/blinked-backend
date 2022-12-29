@@ -106,7 +106,7 @@ public class ProjectController {
 	@Operation(summary = "Get Project By Id")
 	public FrontEndProject getProject(@PathVariable("projectId") Long projectId) {
 
-		Project project = projectRepository.getOne(projectId);
+		Project project = projectRepository.getReferenceById(projectId);
 		try {
 			return projectService.BackEndProjectToFrontEndProject(project);
 		} catch (IOException | SQLException e) {
@@ -117,8 +117,10 @@ public class ProjectController {
 
 	@DeleteMapping("/{projectId}")
 	@Operation(summary = "Delete Project By Id")
-	public void deleteProject(@PathVariable("projectId") Long projectId) {
-		projectRepository.deleteById(projectId);
+	public void deleteProject(@CurrentUser Authorized authorized, @PathVariable("projectId") Long projectId) {
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getWork().getProjects().remove(projectRepository.getReferenceById(projectId));
+		userRepository.save(user);
 	}
 
 	@GetMapping("/list")

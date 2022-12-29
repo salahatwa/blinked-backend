@@ -58,6 +58,7 @@ public class TestAPI {
 		Profile profile=new ConvertToFrontEndUser().convertUserToProfile(user);
 		//		user = templateService.setupUserAccordingToView(user);
 
+		System.out.println(profile.getProjects().size());
 //		FrontEndUser fronEndUser = new FrontEndUser();
 //		fronEndUser.setName("Salah At");
 //		fronEndUser.setMail("ss@gmail.com");
