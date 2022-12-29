@@ -52,7 +52,7 @@ public class UserService {
 	public User create(CreateUserProps props) {
 		validateEmailUniqueness(props);
 
-		List<Role> roles = roleRepository.findOptionalByShortName("USER").map(Collections::singletonList)
+		List<Role> roles = roleRepository.findOptionalByShortName("USR").map(Collections::singletonList)
 				.orElseGet(Collections::emptyList);
 
 		String name = props.getName();

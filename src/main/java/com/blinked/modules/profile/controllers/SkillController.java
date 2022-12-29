@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,10 +55,13 @@ public class SkillController {
 
 		Skill skill = user.getSkill();
 
+		System.out.println(skill);
 		if (skill == null) {
 			skill = new Skill();
 			skill = skillRepository.save(skill);
 			user.setSkill(skill);
+//			user=userRepository.save(user);
+//			skill=user.getSkill();
 		}
 
 		technicalSkill = technicalSkillRepository.save(technicalSkill);
@@ -70,9 +74,20 @@ public class SkillController {
 
 		techSkills.add(technicalSkill);
 
+		skill.setTechnicalSkills(techSkills);
+		user.setSkill(skill);
 		userRepository.save(user);
 
-		System.out.println(technicalSkill.getId());
+		return technicalSkill;
+
+	}
+
+	@PutMapping("/technical-skill")
+	@Operation(summary = "Update Technical Skill")
+	public TechnicalSkill updateTechnicalSkill(@CurrentUser Authorized authorized,
+			@RequestBody TechnicalSkill technicalSkill) {
+
+		technicalSkillRepository.save(technicalSkill);
 
 		return technicalSkill;
 
@@ -87,12 +102,12 @@ public class SkillController {
 	@Transactional
 	@DeleteMapping("/technical-skill/{technicalSkillId}")
 	@Operation(summary = "Delete Technical Skill By Id")
-	public void deleteTechnicalSkillById(@CurrentUser Authorized authorized,@PathVariable("technicalSkillId") Long technicalSkillId) {
+	public void deleteTechnicalSkillById(@CurrentUser Authorized authorized,
+			@PathVariable("technicalSkillId") Long technicalSkillId) {
 
-//		User user = userRepository.getReferenceById(authorized.getId());
-//
-//		List<TechnicalSkill> skill = user.getSkill().getTechnicalSkills();
-		technicalSkillRepository.deleteById(technicalSkillId);
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getSkill().getTechnicalSkills().remove(technicalSkillRepository.getReferenceById(technicalSkillId));
+		userRepository.save(user);
 	}
 
 	@PostMapping("/other-skill")
@@ -118,6 +133,8 @@ public class SkillController {
 
 		otherSkills.add(otherSkill);
 
+		skill.setOtherSkills(otherSkills);
+		user.setSkill(skill);
 		userRepository.save(user);
 
 		return otherSkill;
@@ -131,8 +148,11 @@ public class SkillController {
 
 	@DeleteMapping("/other-skill/{otherSkillId}")
 	@Operation(summary = "Delete Other Skill")
-	public void deleteOtherSkillById(@PathVariable("otherSkillId") Long otherSkillId) {
-		otherSkillRepository.deleteById(otherSkillId);
+	public void deleteOtherSkillById(@CurrentUser Authorized authorized,
+			@PathVariable("otherSkillId") Long otherSkillId) {
+		User user = userRepository.getReferenceById(authorized.getId());
+		user.getSkill().getOtherSkills().remove(otherSkillRepository.getReferenceById(otherSkillId));
+		userRepository.save(user);
 	}
 
 	@PostMapping("/technical-skill/update/view/{technicalSkillId}")
