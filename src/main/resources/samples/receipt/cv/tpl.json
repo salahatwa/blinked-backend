@@ -1,0 +1,10 @@
+{
+  "templateName":"atwa",
+  "title":"cv ta",
+  "subject": "",
+  "author":"salah atwa",
+  "keywords":"",
+  "elements":[
+    {"elementPath":"samples/receipt/cv/index.html"}
+  ]
+}
