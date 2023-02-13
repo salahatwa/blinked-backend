@@ -19,26 +19,26 @@ import com.blinked.modules.core.response.ValidationError;
 
 @RestControllerAdvice
 public class GlobalErrorHandler {
-  @ResponseStatus(code = BAD_REQUEST)
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public Collection<ValidationError> badRequest(MethodArgumentNotValidException exception) {
-    return ValidationError.of(exception);
-  }
+	@ResponseStatus(code = BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public Collection<ValidationError> badRequest(MethodArgumentNotValidException exception) {
+		return ValidationError.of(exception);
+	}
 
-  @ResponseStatus(code = BAD_REQUEST)
-  @ExceptionHandler(BadRequestException.class)
-  public Collection<ValidationError> badRequest(BadRequestException exception) {
-    return exception.getErrors();
-  }
+	@ResponseStatus(code = BAD_REQUEST)
+	@ExceptionHandler(BadRequestException.class)
+	public ApiError badRequest(BadRequestException exception) {
+		return new ApiError(exception.getMessage(), UNAUTHORIZED);
+	}
 
-  @ExceptionHandler(ResponseStatusException.class)
-  public ResponseEntity<ApiError> status(ResponseStatusException exception) {
-    return Responses.fromException(exception);
-  }    
+	@ExceptionHandler(ResponseStatusException.class)
+	public ResponseEntity<ApiError> status(ResponseStatusException exception) {
+		return Responses.fromException(exception);
+	}
 
-  @ResponseStatus(code = UNAUTHORIZED)
-  @ExceptionHandler(AccessDeniedException.class)
-  public ApiError unauthorized(AccessDeniedException exception) {
-    return new ApiError("Not authorized.", UNAUTHORIZED);
-  }
+	@ResponseStatus(code = UNAUTHORIZED)
+	@ExceptionHandler(AccessDeniedException.class)
+	public ApiError unauthorized(AccessDeniedException exception) {
+		return new ApiError("Not authorized.", UNAUTHORIZED);
+	}
 }

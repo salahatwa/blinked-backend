@@ -1,5 +1,7 @@
 package com.blinked.modules.attachment;
 
+import com.blinked.modules.core.model.enums.ValueEnum;
+
 /**
  * Attach origin.
  *

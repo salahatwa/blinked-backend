@@ -1,6 +1,6 @@
 package com.blinked.modules.profile.entities;
 
-import com.blinked.modules.attachment.ValueEnum;
+import com.blinked.modules.core.model.enums.ValueEnum;
 
 /**
  * Site status.

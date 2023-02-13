@@ -7,6 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.blinked.modules.core.repositories.base.BaseRepository;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;

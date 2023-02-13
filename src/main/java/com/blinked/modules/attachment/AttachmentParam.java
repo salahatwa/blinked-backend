@@ -3,6 +3,8 @@ package com.blinked.modules.attachment;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.blinked.modules.core.model.dto.base.InputConverter;
+
 import lombok.Data;
 
 /**

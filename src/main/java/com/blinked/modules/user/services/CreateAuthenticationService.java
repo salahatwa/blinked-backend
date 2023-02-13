@@ -54,6 +54,24 @@ public class CreateAuthenticationService {
 		return new Authentication(new UserInformation(user), accessToken, refreshToken.getCode(), expiresAt);
 	}
 
+	public Authentication createToken(long id) {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> forbidden(message(CREATE_SESSION_ERROR_MESSAGE)));
+		
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime expiresAt = now.plusHours(TOKEN_EXPIRATION_IN_HOURS);
+
+		String accessToken = JWT.encode(encode(user.getId()), user.getAuthorities(), expiresAt, TOKEN_SECRET);
+
+		RefreshToken refreshToken = new RefreshToken(user, REFRESH_TOKEN_EXPIRATION_IN_DAYS);
+
+		refreshTokenRepository.disableOldRefreshTokens(user.getId());
+
+		refreshTokenRepository.save(refreshToken);
+
+		return new Authentication(new UserInformation(user), accessToken, refreshToken.getCode(), expiresAt);
+	}
+
 	public Authentication create(CreateAuthenticationWithRefreshToken body) {
 		RefreshToken old = refreshTokenRepository.findOptionalByCodeAndAvailableIsTrue(body.getRefreshToken())
 				.filter(RefreshToken::nonExpired).orElseThrow(() -> forbidden(message(REFRESH_SESSION_ERROR_MESSAGE)));

@@ -2,6 +2,8 @@ package com.blinked.modules.attachment;
 
 import java.util.Date;
 
+import com.blinked.modules.core.model.dto.base.OutputConverter;
+
 import lombok.Data;
 
 /**
@@ -13,27 +15,27 @@ import lombok.Data;
 @Data
 public class AttachmentDTO implements OutputConverter<AttachmentDTO, Attachment> {
 
-    private Integer id;
+	private Integer id;
 
-    private String name;
+	private String name;
 
-    private String path;
+	private String path;
 
-    private String fileKey;
+	private String fileKey;
 
-    private String thumbPath;
+	private String thumbPath;
 
-    private String mediaType;
+	private String mediaType;
 
-    private String suffix;
+	private String suffix;
 
-    private Integer width;
+	private Integer width;
 
-    private Integer height;
+	private Integer height;
 
-    private Long size;
+	private Long size;
 
-    private AttachmentType type;
+	private AttachmentType type;
 
-    private Date createTime;
+	private Date createTime;
 }

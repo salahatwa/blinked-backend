@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 
+import com.blinked.modules.core.repositories.base.BaseRepository;
+
 /**
  * Attachment repository
  *
- * @author ssatwa
  * @author ssatwa
  * @date 2019-04-03
  */

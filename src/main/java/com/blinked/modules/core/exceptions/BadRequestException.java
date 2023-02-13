@@ -1,51 +1,24 @@
 package com.blinked.modules.core.exceptions;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.springframework.http.HttpStatus;
 
-import com.blinked.modules.core.response.ValidationError;
+/**
+ * Exception caused by bad request.
+ *
+ * @author ssatwa
+ */
+public class BadRequestException extends AbstractBlinkedException {
 
-public class BadRequestException extends RuntimeException {
-  Collection<ValidationError> errors;
+	public BadRequestException(String message) {
+		super(message);
+	}
 
-  public BadRequestException() {
-    this.errors = new ArrayList<>();
-  }
+	public BadRequestException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-  public BadRequestException(Collection<ValidationError> errors) {
-    this.errors = errors;
-  }
-
-  public BadRequestException(String message, Collection<ValidationError> errors) {
-    super(message);
-    this.errors = errors;
-  }
-
-  public BadRequestException(String message, Throwable cause, Collection<ValidationError> errors) {
-    super(message, cause);
-    this.errors = errors;
-  }
-
-  public BadRequestException(Throwable cause, Collection<ValidationError> errors) {
-    super(cause);
-    this.errors = errors;
-  }
-
-  public BadRequestException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace,
-      Collection<ValidationError> errors) {
-    super(message, cause, enableSuppression, writableStackTrace);
-    this.errors = errors;
-  }
-
-  public Collection<ValidationError> getErrors() {
-    return errors;
-  }
-
-  public void add(ValidationError error) {
-    this.errors.add(error);
-  }
-
-  public Boolean hasError() {
-    return !this.errors.isEmpty();
-  }
+	@Override
+	public HttpStatus getStatus() {
+		return HttpStatus.BAD_REQUEST;
+	}
 }
