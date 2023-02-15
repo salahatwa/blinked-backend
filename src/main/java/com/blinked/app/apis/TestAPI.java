@@ -19,6 +19,11 @@ import com.blinked.modules.profile.repositories.UserWebsiteUrlRepository;
 import com.blinked.modules.profile.services.ConvertToFrontEndUser;
 import com.blinked.modules.user.entities.User;
 
+/**
+ * Test
+ * @author SSATWA
+ *
+ */
 @Controller
 public class TestAPI {
 
