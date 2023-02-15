@@ -22,8 +22,8 @@
 
 	<repositories>
 		<repository>
-			<id>nexus</id>
-			<url>http://develop.centit.com/nexus/content/repositories/centit-releases/</url>
+			<id>clojars</id>
+			<url>https://clojars.org/repo/</url>
 		</repository>
 	</repositories>
 
