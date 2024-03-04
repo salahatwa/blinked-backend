@@ -7,6 +7,8 @@ import lombok.ToString;
 import java.util.Comparator;
 import java.util.List;
 
+import com.api.common.model.ApiRs;
+
 /**
  * Year archive vo.
  *
@@ -16,7 +18,7 @@ import java.util.List;
 @Data
 @ToString
 @EqualsAndHashCode
-public class ArchiveYearVO {
+public class ArchiveYearVO extends ApiRs{
 
 	private Integer year;
 

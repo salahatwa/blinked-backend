@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.persistence.criteria.Predicate;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,17 +19,18 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.api.common.attachment.AttachmentQuery;
+import com.api.common.attachment.AttachmentType;
+import com.api.common.attachment.FileHandlers;
+import com.api.common.attachment.UploadResult;
+import com.api.common.repo.AbstractCrudService;
 import com.blinked.apis.responses.AttachmentVO;
-import com.blinked.attachment.AttachmentQuery;
-import com.blinked.attachment.AttachmentType;
-import com.blinked.attachment.FileHandlers;
-import com.blinked.attachment.UploadResult;
 import com.blinked.config.secuirty.AuthorizedUser;
 import com.blinked.entities.Attachment;
 import com.blinked.repositories.AttachmentRepository;
-import com.blinked.repositories.base.AbstractCrudService;
 import com.blinked.services.AttachmentService;
 
+import jakarta.persistence.criteria.Predicate;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -139,7 +138,7 @@ public class AttachmentServiceImpl extends AbstractCrudService<Attachment, Integ
 		Attachment deletedAttachment = removeById(id);
 
 		// Remove the file
-		fileHandlers.delete(deletedAttachment);
+		fileHandlers.delete(deletedAttachment.getType(),deletedAttachment.getFileKey());
 
 		log.debug("Deleted attachment: [{}]", deletedAttachment);
 

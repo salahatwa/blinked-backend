@@ -1,17 +1,15 @@
 package com.blinked.apis.requests;
 
-import static com.blinked.utils.EmailValidations.validateEmailUniqueness;
+import static com.blinked.services.EmailValidations.validateEmailUniqueness;
 
 import java.util.ArrayList;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 import com.blinked.entities.Role;
 import com.blinked.entities.User;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +23,7 @@ public class UserPropsParam {
 
 	@Schema(example = "ssatwa@gmail.com")
 	@NotEmpty(message = "{user.email.not-empty}")
-	@Email(message = "{user.email.is-valid}")
+	@jakarta.validation.constraints.Email(message = "{user.email.is-valid}")
 	private String email;
 
 	@Schema(example = "password")

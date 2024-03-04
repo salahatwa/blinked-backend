@@ -8,13 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.api.common.attachment.AttachmentQuery;
+import com.api.common.attachment.AttachmentType;
+import com.api.common.repo.CrudService;
 import com.blinked.apis.responses.AttachmentVO;
-import com.blinked.attachment.AttachmentQuery;
-import com.blinked.attachment.AttachmentType;
 import com.blinked.config.secuirty.AuthorizedUser;
 import com.blinked.entities.Attachment;
-import com.blinked.exceptions.FileOperationException;
-import com.blinked.repositories.base.CrudService;
 
 
 /**

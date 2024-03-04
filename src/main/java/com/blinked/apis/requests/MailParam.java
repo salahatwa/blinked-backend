@@ -1,9 +1,7 @@
 package com.blinked.apis.requests;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 /**
  * Journal query params.
@@ -15,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 public class MailParam {
 
 	@NotBlank(message = "Recipient cannot be empty")
-	@Email(message = "Email format error")
+	@jakarta.validation.constraints.Email(message = "Email format error")
 	private String to;
 
 	@NotBlank(message = "The subject cannot be empty")

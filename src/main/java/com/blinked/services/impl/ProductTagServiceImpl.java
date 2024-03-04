@@ -16,19 +16,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.NotFoundException;
+import com.api.common.repo.AbstractCrudService;
+import com.api.common.utils.ServiceUtils;
 import com.blinked.entities.Product;
 import com.blinked.entities.ProductTag;
 import com.blinked.entities.Tag;
 import com.blinked.entities.dto.TagWithProductCountDTO;
 import com.blinked.entities.enums.ProductStatus;
 import com.blinked.entities.projection.TagProductCountProjection;
-import com.blinked.exceptions.NotFoundException;
 import com.blinked.repositories.ProductRepository;
 import com.blinked.repositories.ProductTagRepository;
 import com.blinked.repositories.TagRepository;
-import com.blinked.repositories.base.AbstractCrudService;
 import com.blinked.services.ProductTagService;
-import com.blinked.utils.ServiceUtils;
 
 /**
  * Product tag service implementation.

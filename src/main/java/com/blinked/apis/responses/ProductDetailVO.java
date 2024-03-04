@@ -28,7 +28,7 @@ public class ProductDetailVO extends BaseProductDetailDTO {
 
 	private List<TagDTO> tags;
 
-	private Set<Integer> categoryIds;
+	private Set<String> categoryIds;
 
 	private List<CategoryDTO> categories;
 

@@ -5,8 +5,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.common.model.BaseResponse;
 import com.blinked.apis.requests.CategoryParam;
 import com.blinked.apis.responses.CategoryTreeVO;
 import com.blinked.entities.Category;
@@ -29,6 +28,7 @@ import com.blinked.services.ProductCategoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 /**
  * Category controller.
@@ -47,51 +47,53 @@ public class AdminCategoryController {
 	@Autowired
 	private ProductCategoryService productCategoryService;
 
-	@GetMapping("{categoryId:\\d+}")
+	@GetMapping("{categoryId}")
 	@Operation(summary = "Gets category detail")
-	public CategoryDTO getBy(@PathVariable("categoryId") Integer categoryId) {
-		return categoryService.convertTo(categoryService.getById(categoryId));
+	public BaseResponse<CategoryDTO> getBy(@PathVariable("categoryId") String categoryId) {
+		return BaseResponse.ok(categoryService.convertTo(categoryService.getById(categoryId)));
 	}
 
 	@GetMapping
 	@Operation(summary = "Lists all categories")
-	public List<? extends CategoryDTO> listAll(@SortDefault(sort = "createTime", direction = DESC) Sort sort,
+	public BaseResponse<List<? extends CategoryDTO>> listAll(
+			@SortDefault(sort = "createTime", direction = DESC) Sort sort,
 			@RequestParam(name = "more", required = false, defaultValue = "false") boolean more) {
 		if (more) {
-			return productCategoryService.listCategoryWithProductCountDto(sort);
+			return BaseResponse.ok(productCategoryService.listCategoryWithProductCountDto(sort));
 		}
 
-		return categoryService.convertTo(categoryService.listAll(sort));
+		return BaseResponse.ok(categoryService.convertTo(categoryService.listAll(sort)));
 	}
 
 	@GetMapping("tree_view")
 	@Operation(summary = "List all categories as tree")
-	public List<CategoryTreeVO> listAsTree(@SortDefault(sort = "name", direction = ASC) Sort sort) {
-		return categoryService.listAsTree(sort);
+	public BaseResponse<List<CategoryTreeVO>> listAsTree(@SortDefault(sort = "name", direction = ASC) Sort sort) {
+		return BaseResponse.ok(categoryService.listAsTree(sort));
 	}
 
 	@PostMapping
 	@Operation(summary = "Creates category")
-	public CategoryDTO createBy(@RequestBody @Valid CategoryParam categoryParam) {
+	public BaseResponse<CategoryDTO> createBy(@RequestBody @Valid CategoryParam categoryParam) {
 		// Convert to category
 		Category category = categoryParam.convertTo();
 
 		// Save it
-		return categoryService.convertTo(categoryService.create(category));
+		return BaseResponse.ok(categoryService.convertTo(categoryService.create(category)));
 	}
 
-	@PutMapping("{categoryId:\\d+}")
+	@PutMapping("{categoryId}")
 	@Operation(summary = "Updates category")
-	public CategoryDTO updateBy(@PathVariable("categoryId") Integer categoryId,
+	public BaseResponse<CategoryDTO> updateBy(@PathVariable("categoryId") String categoryId,
 			@RequestBody @Valid CategoryParam categoryParam) {
 		Category categoryToUpdate = categoryService.getById(categoryId);
 		categoryParam.update(categoryToUpdate);
-		return categoryService.convertTo(categoryService.update(categoryToUpdate));
+		return BaseResponse.ok(categoryService.convertTo(categoryService.update(categoryToUpdate)));
 	}
 
-	@DeleteMapping("{categoryId:\\d+}")
+	@DeleteMapping("{categoryId}")
 	@Operation(summary = "Deletes category")
-	public void deletePermanently(@PathVariable("categoryId") Integer categoryId) {
+	public BaseResponse<Object> deletePermanently(@PathVariable("categoryId") String categoryId) {
 		categoryService.removeCategoryAndPostCategoryBy(categoryId);
+		return BaseResponse.ok("category deleted succeffully");
 	}
 }

@@ -5,15 +5,15 @@ import java.util.Optional;
 
 import org.springframework.lang.NonNull;
 
+import com.api.common.repo.BaseRepository;
 import com.blinked.entities.Category;
-import com.blinked.repositories.base.BaseRepository;
 
 /**
  * Category repository.
  *
  * @author ssatwa
  */
-public interface CategoryRepository extends BaseRepository<Category, Integer> {
+public interface CategoryRepository extends BaseRepository<Category, String> {
 
 	/**
 	 * Counts by category name.
@@ -29,7 +29,7 @@ public interface CategoryRepository extends BaseRepository<Category, Integer> {
 	 * @param id category id must not be null
 	 * @return the count
 	 */
-	long countById(@NonNull Integer id);
+	long countById(@NonNull String id);
 
 	/**
 	 * Get category by slug
@@ -53,5 +53,5 @@ public interface CategoryRepository extends BaseRepository<Category, Integer> {
 	 * @param id parent id.
 	 * @return list of category
 	 */
-	List<Category> findByParentId(@NonNull Integer id);
+	List<Category> findByParentId(@NonNull String id);
 }

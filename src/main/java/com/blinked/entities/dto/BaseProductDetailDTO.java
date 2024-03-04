@@ -16,6 +16,5 @@ public class BaseProductDetailDTO extends BaseProductSimpleDTO {
 
 	private String template;
 
-
 	private Long rateCount;
 }

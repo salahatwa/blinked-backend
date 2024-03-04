@@ -1,9 +1,7 @@
 package com.blinked.apis.requests;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +15,6 @@ public class UserPropsUpdateParam {
 
 	@Schema(example = "ssatwa@email.com")
 	@NotEmpty(message = "{user.email.not-empty}")
-	@Email(message = "{user.email.is-valid}")
+	@jakarta.validation.constraints.Email(message = "{user.email.is-valid}")
 	private String email;
 }

@@ -3,7 +3,7 @@ package com.blinked.events;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 
-import com.blinked.utils.ServiceUtils;
+import com.api.common.utils.ServiceUtils;
 
 /**
  * Post visit event.

@@ -1,16 +1,13 @@
 package com.blinked.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -30,9 +27,10 @@ import lombok.ToString;
 public class Category extends AuditUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-	@GenericGenerator(name = "custom-id", strategy = "com.blinked.utils.CustomIdGenerator")
-	private Integer id;
+//	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
+//	@GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
+	@UuidGenerator
+	private String id;
 
 	/**
 	 * Category name.
@@ -62,8 +60,8 @@ public class Category extends AuditUser {
 	 * Parent category.
 	 */
 	@Column(name = "parent_id")
-	@ColumnDefault("0")
-	private Integer parentId;
+	@ColumnDefault("")
+	private String parentId;
 
 	@Override
 	public void prePersist() {
@@ -73,8 +71,8 @@ public class Category extends AuditUser {
 			description = "";
 		}
 
-		if (parentId == null || parentId < 0) {
-			parentId = 0;
+		if (parentId == null) {
+			parentId = "";
 		}
 	}
 

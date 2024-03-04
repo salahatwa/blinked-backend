@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.springframework.util.Assert;
 
-import com.blinked.services.base.BaseProductService;
+import com.blinked.services.BaseProductService;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;

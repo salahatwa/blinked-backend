@@ -1,7 +1,6 @@
 package com.blinked.repositories;
 
 import com.blinked.entities.ProductMeta;
-import com.blinked.repositories.base.BaseMetaRepository;
 
 /**
  *

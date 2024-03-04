@@ -1,9 +1,11 @@
 package com.blinked.apis.responses;
 
+import com.api.common.model.ApiRs;
+
 import lombok.Data;
 
 @Data
-public class GeoIpVO {
+public class GeoIpVO extends ApiRs{
 
 	private String ipAddress;
 	private String device;

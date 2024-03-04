@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+import com.api.common.repo.CrudService;
 import com.blinked.entities.Tag;
 import com.blinked.entities.dto.TagDTO;
-import com.blinked.repositories.base.CrudService;
 
 /**
  * Tag service interface.

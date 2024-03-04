@@ -2,14 +2,15 @@ package com.blinked.apis.responses;
 
 import java.util.List;
 
+import com.api.common.model.ApiRs;
+import com.api.common.utils.HashIdsUtils;
 import com.blinked.entities.User;
-import com.blinked.utils.HashIdsUtils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
-public class UserInfoVO {
+public class UserInfoVO extends ApiRs {
 
 	@Schema(example = "BVnl07r1Joz3", required = true)
 	private final String id;

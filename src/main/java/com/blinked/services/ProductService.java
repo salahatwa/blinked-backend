@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +17,8 @@ import com.blinked.apis.responses.ProductListVO;
 import com.blinked.entities.Product;
 import com.blinked.entities.ProductMeta;
 import com.blinked.entities.enums.ProductStatus;
-import com.blinked.services.base.BaseProductService;
+
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Product service interface.
@@ -63,7 +62,7 @@ public interface ProductService extends BaseProductService<Product> {
 	 * @return product created
 	 */
 	@NonNull
-	ProductDetailVO createBy(@NonNull Product product, Set<Integer> tagIds, Set<Integer> categoryIds,
+	ProductDetailVO createBy(@NonNull Product product, Set<Integer> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave);
 
 	/**
@@ -76,7 +75,7 @@ public interface ProductService extends BaseProductService<Product> {
 	 * @return product created
 	 */
 	@NonNull
-	ProductDetailVO createBy(@NonNull Product product, Set<Integer> tagIds, Set<Integer> categoryIds, boolean autoSave);
+	ProductDetailVO createBy(@NonNull Product product, Set<Integer> tagIds, Set<String> categoryIds, boolean autoSave);
 
 	/**
 	 * Updates product by product, tag id set and category id set.
@@ -89,7 +88,7 @@ public interface ProductService extends BaseProductService<Product> {
 	 * @return updated product
 	 */
 	@NonNull
-	ProductDetailVO updateBy(@NonNull Product productToUpdate, Set<Integer> tagIds, Set<Integer> categoryIds,
+	ProductDetailVO updateBy(@NonNull Product productToUpdate, Set<Integer> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave);
 
 	/**

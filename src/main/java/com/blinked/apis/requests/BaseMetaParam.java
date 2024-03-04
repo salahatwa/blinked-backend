@@ -2,12 +2,11 @@ package com.blinked.apis.requests;
 
 import java.lang.reflect.ParameterizedType;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import com.api.common.model.InputConverter;
+import com.api.common.utils.ReflectionUtils;
 
-import com.blinked.repositories.base.InputConverter;
-import com.blinked.utils.ReflectionUtils;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**

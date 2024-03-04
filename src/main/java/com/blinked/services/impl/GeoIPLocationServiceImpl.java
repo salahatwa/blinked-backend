@@ -5,8 +5,6 @@ import static java.util.Objects.nonNull;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Service;
 
 import com.blinked.apis.responses.GeoIpVO;
@@ -15,6 +13,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import ua_parser.Client;
 import ua_parser.Parser;
 

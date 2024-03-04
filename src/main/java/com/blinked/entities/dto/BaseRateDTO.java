@@ -2,9 +2,10 @@ package com.blinked.entities.dto;
 
 import java.util.Date;
 
+import com.api.common.model.ApiRs;
+import com.api.common.model.OutputConverter;
 import com.blinked.entities.BaseRate;
 import com.blinked.entities.enums.RateStatus;
-import com.blinked.repositories.base.OutputConverter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,32 +20,32 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode
-public class BaseRateDTO implements OutputConverter<BaseRateDTO, BaseRate> {
+public class BaseRateDTO extends ApiRs implements OutputConverter<BaseRateDTO, BaseRate> {
 
-    private Long id;
+	private Long id;
 
-    private String author;
+	private String author;
 
-    private String email;
+	private String email;
 
-    private String ipAddress;
+	private String ipAddress;
 
-    private String authorUrl;
+	private String authorUrl;
 
-    private String gravatarMd5;
+	private String gravatarMd5;
 
-    private String content;
+	private String content;
 
-    private RateStatus status;
+	private RateStatus status;
 
-    private String userAgent;
+	private String userAgent;
 
-    private Long parentId;
+	private Long parentId;
 
-    private Boolean isAdmin;
+	private Boolean isAdmin;
 
-    private Boolean allowNotification;
+	private Boolean allowNotification;
 
-    private Date createTime;
+	private Date createTime;
 
 }

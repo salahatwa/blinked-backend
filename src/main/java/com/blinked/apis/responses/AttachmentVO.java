@@ -2,9 +2,10 @@ package com.blinked.apis.responses;
 
 import java.util.Date;
 
-import com.blinked.attachment.AttachmentType;
+import com.api.common.attachment.AttachmentType;
+import com.api.common.model.ApiRs;
+import com.api.common.model.OutputConverter;
 import com.blinked.entities.Attachment;
-import com.blinked.repositories.base.OutputConverter;
 
 import lombok.Data;
 
@@ -15,7 +16,7 @@ import lombok.Data;
  * @date 3/21/19
  */
 @Data
-public class AttachmentVO implements OutputConverter<AttachmentVO, Attachment> {
+public class AttachmentVO extends ApiRs implements OutputConverter<AttachmentVO, Attachment> {
 
 	private Long id;
 

@@ -10,7 +10,6 @@ import org.springframework.lang.NonNull;
 import com.blinked.entities.ProductRate;
 import com.blinked.entities.projection.RateChildrenCountProjection;
 import com.blinked.entities.projection.RateCountProjection;
-import com.blinked.repositories.base.BaseRateRepository;
 
 /**
  * ProductRate repository.

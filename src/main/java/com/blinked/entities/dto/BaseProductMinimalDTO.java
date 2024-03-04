@@ -2,9 +2,10 @@ package com.blinked.entities.dto;
 
 import java.util.Date;
 
+import com.api.common.model.ApiRs;
+import com.api.common.model.OutputConverter;
 import com.blinked.entities.BaseProduct;
 import com.blinked.entities.enums.ProductStatus;
-import com.blinked.repositories.base.OutputConverter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,7 +20,7 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode
-public class BaseProductMinimalDTO implements OutputConverter<BaseProductMinimalDTO, BaseProduct> {
+public class BaseProductMinimalDTO extends ApiRs implements OutputConverter<BaseProductMinimalDTO, BaseProduct> {
 
 	private Integer id;
 

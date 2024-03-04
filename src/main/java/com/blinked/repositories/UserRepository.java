@@ -1,10 +1,9 @@
 package com.blinked.repositories;
 
-import java.util.Collection;
 import java.util.Optional;
 
+import com.api.common.repo.BaseRepository;
 import com.blinked.entities.User;
-import com.blinked.repositories.base.BaseRepository;
 
 public interface UserRepository extends BaseRepository<User, Long> {
 	Optional<User> findById(Long id);

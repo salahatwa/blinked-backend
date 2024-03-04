@@ -16,8 +16,6 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.criteria.Predicate;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -32,6 +30,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.NotFoundException;
+import com.api.common.repo.AbstractCrudService;
+import com.api.common.utils.ServiceUtils;
+import com.api.common.utils.ServletUtils;
 import com.blinked.apis.requests.BaseRateParam;
 import com.blinked.apis.requests.RatePage;
 import com.blinked.apis.requests.RateQuery;
@@ -43,15 +45,12 @@ import com.blinked.entities.dto.BaseRateDTO;
 import com.blinked.entities.enums.RateStatus;
 import com.blinked.entities.projection.RateChildrenCountProjection;
 import com.blinked.entities.projection.RateCountProjection;
-import com.blinked.exceptions.NotFoundException;
-import com.blinked.repositories.base.AbstractCrudService;
-import com.blinked.repositories.base.BaseRateRepository;
+import com.blinked.repositories.BaseRateRepository;
+import com.blinked.services.BaseRateService;
 import com.blinked.services.UserService;
-import com.blinked.services.base.BaseRateService;
-import com.blinked.utils.ServiceUtils;
-import com.blinked.utils.ServletUtils;
 
 import cn.hutool.core.util.URLUtil;
+import jakarta.persistence.criteria.Predicate;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -267,13 +266,13 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		// Set some default values
-		if (rate.getIpAddress() == null) {
-			rate.setIpAddress(ServletUtils.getRequestIp());
-		}
-
-		if (rate.getUserAgent() == null) {
-			rate.setUserAgent(ServletUtils.getHeaderIgnoreCase(HttpHeaders.USER_AGENT));
-		}
+//		if (rate.getIpAddress() == null) {
+//			rate.setIpAddress(ServletUtils.getRequestIp());
+//		}
+//
+//		if (rate.getUserAgent() == null) {
+//			rate.setUserAgent(ServletUtils.getHeaderIgnoreCase(HttpHeaders.USER_AGENT));
+//		}
 
 		if (rate.getGravatarMd5() == null) {
 			rate.setGravatarMd5(DigestUtils.md5Hex(rate.getEmail()));

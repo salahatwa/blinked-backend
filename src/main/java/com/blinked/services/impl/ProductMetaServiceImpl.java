@@ -1,14 +1,14 @@
 package com.blinked.services.impl;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import com.api.common.exception.NotFoundException;
 import com.blinked.entities.ProductMeta;
-import com.blinked.exceptions.NotFoundException;
+import com.blinked.repositories.BaseMetaRepository;
 import com.blinked.repositories.ProductRepository;
-import com.blinked.repositories.base.BaseMetaRepository;
 import com.blinked.services.ProductMetaService;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
 /**

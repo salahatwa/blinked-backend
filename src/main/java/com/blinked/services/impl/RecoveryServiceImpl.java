@@ -1,8 +1,8 @@
 package com.blinked.services.impl;
 
-import static com.blinked.utils.MailConstants.ERROR_SENDING_EMAIL_MESSAGE_TO;
-import static com.blinked.utils.PasswordRecoveryEnvironments.MINUTES_TO_EXPIRE_RECOVERY_CODE;
-import static com.blinked.utils.PasswordRecoveryEnvironments.SUBJECT_PASSWORD_RECOVERY_CODE;
+import static com.api.common.utils.MailConstants.ERROR_SENDING_EMAIL_MESSAGE_TO;
+import static com.api.common.utils.PasswordRecoveryEnvironments.MINUTES_TO_EXPIRE_RECOVERY_CODE;
+import static com.api.common.utils.PasswordRecoveryEnvironments.SUBJECT_PASSWORD_RECOVERY_CODE;
 
 import java.util.Optional;
 
@@ -10,12 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.api.common.repo.AbstractCrudService;
 import com.blinked.apis.requests.RecoveryEmailParam;
 import com.blinked.entities.Recovery;
 import com.blinked.entities.User;
 import com.blinked.repositories.RecoveryRepository;
 import com.blinked.repositories.UserRepository;
-import com.blinked.repositories.base.AbstractCrudService;
 import com.blinked.services.MailService;
 import com.blinked.services.RecoveryService;
 

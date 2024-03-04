@@ -7,10 +7,10 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 
+import com.api.common.repo.BaseRepository;
 import com.blinked.entities.ProductCategory;
 import com.blinked.entities.enums.ProductStatus;
 import com.blinked.entities.projection.CategoryProductCountProjection;
-import com.blinked.repositories.base.BaseRepository;
 
 /**
  *
@@ -27,7 +27,7 @@ public interface ProductCategoryRepository extends BaseRepository<ProductCategor
 	 */
 	@NonNull
 	@Query("select productCategory.categoryId from ProductCategory productCategory where productCategory.productId = ?1")
-	Set<Integer> findAllCategoryIdsByProductId(@NonNull Integer productId);
+	Set<String> findAllCategoryIdsByProductId(@NonNull Integer productId);
 
 	/**
 	 * Finds all post ids by category id.
@@ -37,7 +37,7 @@ public interface ProductCategoryRepository extends BaseRepository<ProductCategor
 	 */
 	@NonNull
 	@Query("select productCategory.productId from ProductCategory productCategory where productCategory.categoryId = ?1")
-	Set<Integer> findAllProductIdsByCategoryId(@NonNull Integer categoryId);
+	Set<Integer> findAllProductIdsByCategoryId(@NonNull String categoryId);
 
 	/**
 	 * Finds all product ids by category id and post status.
@@ -48,7 +48,7 @@ public interface ProductCategoryRepository extends BaseRepository<ProductCategor
 	 */
 	@NonNull
 	@Query("select productCategory.productId from ProductCategory productCategory, Product product where productCategory.categoryId = ?1 and product.id = productCategory.productId and product.status = ?2")
-	Set<Integer> findAllProductIdsByCategoryId(@NonNull Integer categoryId, @NonNull ProductStatus status);
+	Set<Integer> findAllProductIdsByCategoryId(@NonNull String categoryId, @NonNull ProductStatus status);
 
 	/**
 	 * Finds all product categories by post id in.
@@ -81,7 +81,7 @@ public interface ProductCategoryRepository extends BaseRepository<ProductCategor
 	 * @return a list of post category
 	 */
 	@NonNull
-	List<ProductCategory> findAllByCategoryId(@NonNull Integer categoryId);
+	List<ProductCategory> findAllByCategoryId(@NonNull String categoryId);
 
 	/**
 	 * Deletes post categories by post id.
@@ -99,7 +99,7 @@ public interface ProductCategoryRepository extends BaseRepository<ProductCategor
 	 * @return a list of post category deleted
 	 */
 	@NonNull
-	List<ProductCategory> deleteByCategoryId(@NonNull Integer categoryId);
+	List<ProductCategory> deleteByCategoryId(@NonNull String categoryId);
 
 	@Query("select new com.blinked.entities.projection.CategoryProductCountProjection(count(pc.productId), pc.categoryId) from ProductCategory pc group by pc.categoryId")
 	@NonNull

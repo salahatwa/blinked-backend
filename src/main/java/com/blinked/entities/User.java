@@ -1,12 +1,11 @@
 package com.blinked.entities;
 
-import static com.blinked.utils.SecurityEnvironments.ENCODER;
+import static com.blinked.config.secuirty.SecurityEnvironments.ENCODER;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static jakarta.persistence.CascadeType.DETACH;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 import static java.util.Optional.ofNullable;
-import static java.util.stream.Stream.of;
-import static javax.persistence.CascadeType.DETACH;
-import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -14,22 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Tuple;
-
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.persistence.Tuple;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -135,19 +133,19 @@ public class User extends AuditDate implements Serializable {
 		this.password = ENCODER.encode(password);
 	}
 
-	public static User from(Tuple tuple) {
-		User user = new User();
-		user.setId(tuple.get("id", BigInteger.class));
-		user.setName(tuple.get("name", String.class));
-		user.setImage(tuple.get("image", String.class));
-		user.setActive(tuple.get("active", Boolean.class));
-		user.setEmail(tuple.get("email", String.class));
-		user.setPassword(tuple.get("password", String.class));
-		user.setRoles(ofNullable(tuple.get("roles", String.class))
-				.map(roles -> of(roles.split(",")).map(Role::new).collect(Collectors.toList()))
-				.orElse(new ArrayList<Role>()));
-		return user;
-	}
+//	public static User from(Tuple tuple) {
+//		User user = new User();
+//		user.setId(tuple.get("id", BigInteger.class));
+//		user.setName(tuple.get("name", String.class));
+//		user.setImage(tuple.get("image", String.class));
+//		user.setActive(tuple.get("active", Boolean.class));
+//		user.setEmail(tuple.get("email", String.class));
+//		user.setPassword(tuple.get("password", String.class));
+//		user.setRoles(ofNullable(tuple.get("roles", String.class))
+//				.map(roles -> of(roles.split(",")).map(Role::new).collect(Collectors.toList()))
+//				.orElse(new ArrayList<Role>()));
+//		return user;
+//	}
 
 	public Boolean isActive() {
 		return this.active;

@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.blinked.entities.Product;
 import com.blinked.entities.enums.ProductStatus;
-import com.blinked.repositories.base.BaseProductRepository;
 
 /**
  *

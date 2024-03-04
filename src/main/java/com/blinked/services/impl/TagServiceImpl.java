@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.AlreadyExistsException;
+import com.api.common.exception.NotFoundException;
+import com.api.common.repo.AbstractCrudService;
 import com.blinked.entities.Tag;
 import com.blinked.entities.dto.TagDTO;
-import com.blinked.exceptions.AlreadyExistsException;
-import com.blinked.exceptions.NotFoundException;
 import com.blinked.repositories.TagRepository;
-import com.blinked.repositories.base.AbstractCrudService;
 import com.blinked.services.TagService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * TagService implementation class.
  *
- * @author ssatwa
  * @author ssatwa
  * @date 2019-03-14
  */

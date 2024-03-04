@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.lang.NonNull;
 
+import com.api.common.repo.BaseRepository;
 import com.blinked.entities.Tag;
-import com.blinked.repositories.base.BaseRepository;
 
 /**
  * Tag repository.

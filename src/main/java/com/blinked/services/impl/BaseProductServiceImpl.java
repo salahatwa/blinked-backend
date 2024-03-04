@@ -19,19 +19,19 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.AlreadyExistsException;
+import com.api.common.exception.BadRequestException;
+import com.api.common.exception.NotFoundException;
+import com.api.common.repo.AbstractCrudService;
+import com.api.common.utils.DateUtils;
+import com.api.common.utils.ServiceUtils;
 import com.blinked.entities.BaseProduct;
 import com.blinked.entities.dto.BaseProductDetailDTO;
 import com.blinked.entities.dto.BaseProductMinimalDTO;
 import com.blinked.entities.dto.BaseProductSimpleDTO;
 import com.blinked.entities.enums.ProductStatus;
-import com.blinked.exceptions.AlreadyExistsException;
-import com.blinked.exceptions.BadRequestException;
-import com.blinked.exceptions.NotFoundException;
-import com.blinked.repositories.base.AbstractCrudService;
-import com.blinked.repositories.base.BaseProductRepository;
-import com.blinked.services.base.BaseProductService;
-import com.blinked.utils.DateUtils;
-import com.blinked.utils.ServiceUtils;
+import com.blinked.repositories.BaseProductRepository;
+import com.blinked.services.BaseProductService;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import com.blinked.utils.HashIdsUtils;
+import com.api.common.utils.HashIdsUtils;
 
 public class AuthorizedUser extends User {
 

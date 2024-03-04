@@ -1,9 +1,7 @@
 package com.blinked.apis.requests;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +10,7 @@ import lombok.Setter;
 public class RecoveryParam {
 
   @Schema(example = "jubileu@email.com")
-  @Email(message = "{recovery.email.is-valid}")
+  @jakarta.validation.constraints.Email(message = "{recovery.email.is-valid}")
   @NotEmpty(message = "{recovery.email.not-empty}")
   private String email;
 }

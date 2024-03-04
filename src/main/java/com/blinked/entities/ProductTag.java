@@ -2,15 +2,17 @@ package com.blinked.entities;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
 
+import com.api.common.utils.CustomIdGenerator;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -26,14 +28,14 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @RequiredArgsConstructor
-@javax.persistence.Entity
+@Entity
 @Table(name = "product_tags", indexes = { @Index(name = "product_tags_product_id", columnList = "product_id"),
 		@Index(name = "product_tags_tag_id", columnList = "product_id") })
 public class ProductTag extends AuditUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-	@GenericGenerator(name = "custom-id", strategy = "com.blinked.utils.CustomIdGenerator")
+	@GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
 	private Integer id;
 
 	@Column(name = "product_id", nullable = false)

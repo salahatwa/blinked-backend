@@ -2,8 +2,9 @@ package com.blinked.entities.dto;
 
 import java.util.Date;
 
+import com.api.common.model.ApiRs;
+import com.api.common.model.OutputConverter;
 import com.blinked.entities.Category;
-import com.blinked.repositories.base.OutputConverter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,9 +19,9 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode
-public class CategoryDTO implements OutputConverter<CategoryDTO, Category> {
+public class CategoryDTO extends ApiRs implements OutputConverter<CategoryDTO, Category> {
 
-	private Integer id;
+	private String id;
 
 	private String name;
 

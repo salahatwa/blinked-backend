@@ -14,11 +14,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -33,6 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.NotFoundException;
+import com.api.common.utils.DateUtils;
+import com.api.common.utils.ServiceUtils;
 import com.blinked.apis.requests.ProductQuery;
 import com.blinked.apis.responses.ArchiveMonthVO;
 import com.blinked.apis.responses.ArchiveYearVO;
@@ -49,9 +47,8 @@ import com.blinked.entities.dto.BaseProductMinimalDTO;
 import com.blinked.entities.dto.BaseProductSimpleDTO;
 import com.blinked.entities.enums.ProductStatus;
 import com.blinked.events.ProductVisitEvent;
-import com.blinked.exceptions.NotFoundException;
+import com.blinked.repositories.BaseProductRepository;
 import com.blinked.repositories.ProductRepository;
-import com.blinked.repositories.base.BaseProductRepository;
 import com.blinked.services.CategoryService;
 import com.blinked.services.ProductCategoryService;
 import com.blinked.services.ProductMetaService;
@@ -59,9 +56,11 @@ import com.blinked.services.ProductRateService;
 import com.blinked.services.ProductService;
 import com.blinked.services.ProductTagService;
 import com.blinked.services.TagService;
-import com.blinked.utils.DateUtils;
-import com.blinked.utils.ServiceUtils;
 
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -134,7 +133,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 
 	@Override
 	@Transactional
-	public ProductDetailVO createBy(Product productToCreate, Set<Integer> tagIds, Set<Integer> categoryIds,
+	public ProductDetailVO createBy(Product productToCreate, Set<Integer> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave) {
 		ProductDetailVO createdProduct = createOrUpdate(productToCreate, tagIds, categoryIds, metas);
 
@@ -142,7 +141,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 	}
 
 	@Override
-	public ProductDetailVO createBy(Product productToCreate, Set<Integer> tagIds, Set<Integer> categoryIds,
+	public ProductDetailVO createBy(Product productToCreate, Set<Integer> tagIds, Set<String> categoryIds,
 			boolean autoSave) {
 		ProductDetailVO createdProduct = createOrUpdate(productToCreate, tagIds, categoryIds, null);
 
@@ -151,7 +150,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 
 	@Override
 	@Transactional
-	public ProductDetailVO updateBy(Product productToUpdate, Set<Integer> tagIds, Set<Integer> categoryIds,
+	public ProductDetailVO updateBy(Product productToUpdate, Set<Integer> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave) {
 		// Set edit time
 		productToUpdate.setEditTime(DateUtils.now());
@@ -553,7 +552,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 
 		// Extract ids
 		Set<Integer> tagIds = ServiceUtils.fetchProperty(tags, Tag::getId);
-		Set<Integer> categoryIds = ServiceUtils.fetchProperty(categories, Category::getId);
+		Set<String> categoryIds = ServiceUtils.fetchProperty(categories, Category::getId);
 		Set<Long> metaIds = ServiceUtils.fetchProperty(productMetaList, ProductMeta::getId);
 
 		// Get product tag ids
@@ -614,7 +613,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 		};
 	}
 
-	private ProductDetailVO createOrUpdate(@NonNull Product product, Set<Integer> tagIds, Set<Integer> categoryIds,
+	private ProductDetailVO createOrUpdate(@NonNull Product product, Set<Integer> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas) {
 		Assert.notNull(product, "Product param must not be null");
 

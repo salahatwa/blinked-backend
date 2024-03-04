@@ -1,14 +1,13 @@
 package com.blinked.apis.requests;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import org.apache.commons.lang3.StringUtils;
 
+import com.api.common.model.InputConverter;
+import com.api.common.utils.SlugUtils;
 import com.blinked.entities.Category;
-import com.blinked.repositories.base.InputConverter;
-import com.blinked.utils.SlugUtils;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**

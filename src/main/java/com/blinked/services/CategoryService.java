@@ -7,10 +7,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.common.repo.CrudService;
 import com.blinked.apis.responses.CategoryTreeVO;
 import com.blinked.entities.Category;
 import com.blinked.entities.dto.CategoryDTO;
-import com.blinked.repositories.base.CrudService;
 
 /**
  * Category service.
@@ -19,7 +19,7 @@ import com.blinked.repositories.base.CrudService;
  * @date 2019-03-14
  */
 @Transactional(readOnly = true)
-public interface CategoryService extends CrudService<Category, Integer> {
+public interface CategoryService extends CrudService<Category, String> {
 
     /**
      * Lists as category tree.
@@ -63,7 +63,7 @@ public interface CategoryService extends CrudService<Category, Integer> {
      * @param categoryId category id must not be null
      */
     @Transactional
-    void removeCategoryAndPostCategoryBy(Integer categoryId);
+    void removeCategoryAndPostCategoryBy(String categoryId);
 
     /**
      * List categories by parent id.
@@ -71,7 +71,7 @@ public interface CategoryService extends CrudService<Category, Integer> {
      * @param id parent id.
      * @return list of category.
      */
-    List<Category> listByParentId(@NonNull Integer id);
+    List<Category> listByParentId(@NonNull String id);
 
     /**
      * Converts to category dto.

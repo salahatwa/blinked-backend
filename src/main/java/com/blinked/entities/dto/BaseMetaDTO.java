@@ -2,8 +2,9 @@ package com.blinked.entities.dto;
 
 import java.util.Date;
 
+import com.api.common.model.ApiRs;
+import com.api.common.model.OutputConverter;
 import com.blinked.entities.BaseMeta;
-import com.blinked.repositories.base.OutputConverter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,14 +19,14 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode
-public class BaseMetaDTO implements OutputConverter<BaseMetaDTO, BaseMeta> {
-    private Long id;
+public class BaseMetaDTO extends ApiRs implements OutputConverter<BaseMetaDTO, BaseMeta> {
+	private Long id;
 
-    private Integer postId;
+	private Integer postId;
 
-    private String key;
+	private String key;
 
-    private String value;
+	private String value;
 
-    private Date createTime;
+	private Date createTime;
 }

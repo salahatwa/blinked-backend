@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@Tag(name = "Recovery Password")
+@Tag(name = "Public Recovery Password")
 @RequestMapping("/api/recoveries")
 public class RecoveriesController {
 
@@ -27,21 +27,21 @@ public class RecoveriesController {
 
 	@PostMapping
 	@ResponseStatus(NO_CONTENT)
-	@Operation(summary = "Starts recovery password process", description = "Sends a email to user with recovery code")
+	@Operation(summary = "Step1 - Starts recovery password process", description = "Sends a email to user with recovery code")
 	public void recovery(@RequestBody RecoveryParam request) {
 		recoveryService.recovery(request.getEmail());
 	}
 
 	@PostMapping("/confirm")
 	@ResponseStatus(NO_CONTENT)
-	@Operation(summary = "Confirm recovery code")
+	@Operation(summary = "Step2 - Confirm recovery code")
 	public void confirm(@RequestBody RecoveryConfirmParam confirm) {
 		recoveryService.confirm(confirm.getEmail(), confirm.getCode());
 	}
 
 	@PostMapping("/update")
 	@ResponseStatus(NO_CONTENT)
-	@Operation(summary = "Update user password")
+	@Operation(summary = "Step3 - Update user password")
 	public void update(@RequestBody RecoveryUpdateParam update) {
 		recoveryService.update(update.getEmail(), update.getCode(), update.getPassword());
 	}

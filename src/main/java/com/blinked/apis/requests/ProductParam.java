@@ -4,19 +4,18 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.model.InputConverter;
+import com.api.common.utils.SlugUtils;
 import com.blinked.entities.Product;
 import com.blinked.entities.ProductMeta;
 import com.blinked.entities.enums.ProductStatus;
-import com.blinked.repositories.base.InputConverter;
-import com.blinked.utils.SlugUtils;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -61,7 +60,7 @@ public class ProductParam implements InputConverter<Product> {
 
 	private Set<Integer> tagIds;
 
-	private Set<Integer> categoryIds;
+	private Set<String> categoryIds;
 
 	private Set<ProductMetaParam> metas;
 

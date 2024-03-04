@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.BadRequestException;
+import com.api.common.exception.NotFoundException;
+import com.api.common.utils.ServiceUtils;
 import com.blinked.apis.responses.ProductRateWithProductVO;
 import com.blinked.apis.responses.RateWithHasChildrenVO;
 import com.blinked.entities.Product;
 import com.blinked.entities.ProductRate;
 import com.blinked.entities.dto.BaseProductMinimalDTO;
 import com.blinked.entities.enums.RateStatus;
-import com.blinked.exceptions.BadRequestException;
-import com.blinked.exceptions.NotFoundException;
 import com.blinked.repositories.ProductRateRepository;
 import com.blinked.repositories.ProductRepository;
 import com.blinked.services.ProductRateService;
 import com.blinked.services.UserService;
-import com.blinked.utils.ServiceUtils;
 
 import lombok.extern.slf4j.Slf4j;
 

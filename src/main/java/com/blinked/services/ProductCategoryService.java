@@ -12,12 +12,12 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.common.repo.CrudService;
 import com.blinked.entities.Category;
 import com.blinked.entities.Product;
 import com.blinked.entities.ProductCategory;
 import com.blinked.entities.enums.ProductStatus;
 import com.blinked.entities.projection.CategoryWithProductCountProjection;
-import com.blinked.repositories.base.CrudService;
 
 /**
  *
@@ -51,7 +51,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 * @return a list of products
 	 */
 	@NonNull
-	List<Product> listProductBy(@NonNull Integer categoryId);
+	List<Product> listProductBy(@NonNull String categoryId);
 
 	/**
 	 * Lists product by category id and product status.
@@ -61,7 +61,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 * @return a list of product
 	 */
 	@NonNull
-	List<Product> listProductBy(@NonNull Integer categoryId, @NonNull ProductStatus status);
+	List<Product> listProductByCat(@NonNull String categoryId, @NonNull ProductStatus status);
 
 	/**
 	 * Lists product by category slug and product status.
@@ -81,7 +81,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 * @return page of product
 	 */
 	@NonNull
-	Page<Product> pageProductBy(@NonNull Integer categoryId, Pageable pageable);
+	Page<Product> pageProductBy(@NonNull String categoryId, Pageable pageable);
 
 	/**
 	 * Pages product by category id and product status.
@@ -92,7 +92,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 * @return page of product
 	 */
 	@NonNull
-	Page<Product> pageProductBy(@NonNull Integer categoryId, @NonNull ProductStatus status, Pageable pageable);
+	Page<Product> pageProductBy(@NonNull String categoryId, @NonNull ProductStatus status, Pageable pageable);
 
 	/**
 	 * Merges or creates products categories by product id and category id set if absent.
@@ -102,7 +102,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 * @return a list of product category
 	 */
 	@NonNull
-	List<ProductCategory> mergeOrCreateByIfAbsent(@NonNull Integer productId, @Nullable Set<Integer> categoryIds);
+	List<ProductCategory> mergeOrCreateByIfAbsent(@NonNull Integer productId, @Nullable Set<String> categoryIds);
 
 	/**
 	 * Lists by product id.
@@ -120,7 +120,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 * @return a list of product category
 	 */
 	@NonNull
-	List<ProductCategory> listByCategoryId(@NonNull Integer categoryId);
+	List<ProductCategory> listByCategoryId(@NonNull String categoryId);
 
 	/**
 	 * List category id set by product id.
@@ -129,7 +129,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 * @return a set of category id
 	 */
 	@NonNull
-	Set<Integer> listCategoryIdsByProductId(@NonNull Integer productId);
+	Set<String> listCategoryIdsByProductId(@NonNull Integer productId);
 
 	/**
 	 * Removes product categories by product id.
@@ -149,7 +149,7 @@ public interface ProductCategoryService extends CrudService<ProductCategory, Int
 	 */
 	@NonNull
 	@Transactional
-	List<ProductCategory> removeByCategoryId(@NonNull Integer categoryId);
+	List<ProductCategory> removeByCategoryId(@NonNull String categoryId);
 
 	/**
 	 * Lists category with product count.

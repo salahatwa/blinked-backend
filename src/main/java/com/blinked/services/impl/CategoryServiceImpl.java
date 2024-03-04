@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -12,16 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.AlreadyExistsException;
+import com.api.common.exception.NotFoundException;
+import com.api.common.repo.AbstractCrudService;
 import com.blinked.apis.responses.CategoryTreeVO;
 import com.blinked.entities.Category;
 import com.blinked.entities.dto.CategoryDTO;
-import com.blinked.exceptions.AlreadyExistsException;
-import com.blinked.exceptions.NotFoundException;
 import com.blinked.repositories.CategoryRepository;
-import com.blinked.repositories.base.AbstractCrudService;
 import com.blinked.services.CategoryService;
 import com.blinked.services.ProductCategoryService;
-import com.blinked.utils.ServiceUtils;
 import com.google.common.base.Objects;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class CategoryServiceImpl extends AbstractCrudService<Category, Integer> implements CategoryService {
+public class CategoryServiceImpl extends AbstractCrudService<Category, String> implements CategoryService {
 
 	private final CategoryRepository categoryRepository;
 
@@ -60,7 +60,7 @@ public class CategoryServiceImpl extends AbstractCrudService<Category, Integer> 
 
 		// Check parent id
 		System.out.println(category.getParentId());
-		if (!ServiceUtils.isEmptyId(category.getParentId())) {
+		if (StringUtils.isNoneBlank(category.getParentId())) {
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
 			count = categoryRepository.countById(category.getParentId());
 
@@ -157,7 +157,7 @@ public class CategoryServiceImpl extends AbstractCrudService<Category, Integer> 
 	private CategoryTreeVO createTopLevelCategory() {
 		CategoryTreeVO topCategory = new CategoryTreeVO();
 		// Set default value
-		topCategory.setId(0);
+		topCategory.setId("");
 		topCategory.setChildren(new LinkedList<>());
 		topCategory.setParentId(-1);
 
@@ -172,7 +172,7 @@ public class CategoryServiceImpl extends AbstractCrudService<Category, Integer> 
 	@Override
 	public Category getBySlugOfNonNull(String slug) {
 		return categoryRepository.getBySlug(slug)
-				.orElseThrow(() -> new NotFoundException("查询不到该分类的信息").setErrorData(slug));
+				.orElseThrow(() -> new NotFoundException("No information found in this category").setErrorData(slug));
 	}
 
 	@Override
@@ -182,11 +182,11 @@ public class CategoryServiceImpl extends AbstractCrudService<Category, Integer> 
 
 	@Override
 	@Transactional
-	public void removeCategoryAndPostCategoryBy(Integer categoryId) {
+	public void removeCategoryAndPostCategoryBy(String categoryId) {
 		List<Category> categories = listByParentId(categoryId);
 		if (null != categories && categories.size() > 0) {
 			categories.forEach(category -> {
-				category.setParentId(0);
+				category.setParentId("");
 				update(category);
 			});
 		}
@@ -197,7 +197,7 @@ public class CategoryServiceImpl extends AbstractCrudService<Category, Integer> 
 	}
 
 	@Override
-	public List<Category> listByParentId(Integer id) {
+	public List<Category> listByParentId(String id) {
 		Assert.notNull(id, "Parent id must not be null");
 		return categoryRepository.findByParentId(id);
 	}

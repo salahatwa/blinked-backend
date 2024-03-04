@@ -2,14 +2,12 @@ package com.blinked.apis.requests;
 
 import java.lang.reflect.ParameterizedType;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import com.api.common.model.InputConverter;
+import com.api.common.utils.ReflectionUtils;
 
-import com.blinked.repositories.base.InputConverter;
-import com.blinked.utils.ReflectionUtils;
-
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -27,7 +25,7 @@ public abstract class BaseRateParam<RATE> implements InputConverter<RATE> {
 	private String author;
 
 	@NotBlank(message = "The mailbox cannot be empty")
-	@Email(message = "The email format is incorrect")
+	@jakarta.validation.constraints.Email(message = "The email format is incorrect")
 	@Size(max = 255, message = "The character length of the mailbox cannot exceed {max}")
 	private String email;
 

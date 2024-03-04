@@ -1,6 +1,6 @@
 package com.blinked.entities.enums;
 
-import com.blinked.utils.ValueEnum;
+import com.api.common.utils.ValueEnum;
 
 /**
  * Comment status.

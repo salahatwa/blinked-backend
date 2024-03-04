@@ -16,5 +16,5 @@ public class CategoryProductCountProjection {
 
     private Long productCount;
 
-    private Integer categoryId;
+    private String categoryId;
 }

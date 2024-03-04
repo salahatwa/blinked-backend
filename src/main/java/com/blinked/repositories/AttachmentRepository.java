@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.lang.NonNull;
 
-import com.blinked.attachment.AttachmentType;
+import com.api.common.attachment.AttachmentType;
+import com.api.common.repo.BaseRepository;
 import com.blinked.entities.Attachment;
-import com.blinked.repositories.base.BaseRepository;
 
 /**
  * Attachment repository

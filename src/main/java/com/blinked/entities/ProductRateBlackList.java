@@ -2,16 +2,18 @@ package com.blinked.entities;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.hibernate.annotations.GenericGenerator;
 
+import com.api.common.utils.CustomIdGenerator;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +26,7 @@ import lombok.NoArgsConstructor;
  * @date 2020/1/3
  */
 @Data
-@javax.persistence.Entity
+@Entity
 @Table(name = "rate_black_list")
 @EqualsAndHashCode(callSuper = true)
 @Builder
@@ -33,7 +35,7 @@ import lombok.NoArgsConstructor;
 public class ProductRateBlackList extends AuditUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-    @GenericGenerator(name = "custom-id", strategy = "com.blinked.utils.CustomIdGenerator")
+    @GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
     private Long id;
 
     @Column(name = "ip_address", length = 127, nullable = false)

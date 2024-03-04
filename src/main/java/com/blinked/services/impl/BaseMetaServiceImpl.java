@@ -10,19 +10,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.repo.AbstractCrudService;
+import com.api.common.utils.ServiceUtils;
 import com.blinked.apis.requests.BaseMetaParam;
 import com.blinked.entities.BaseMeta;
 import com.blinked.entities.dto.BaseMetaDTO;
-import com.blinked.repositories.base.AbstractCrudService;
-import com.blinked.repositories.base.BaseMetaRepository;
-import com.blinked.services.base.BaseMetaService;
-import com.blinked.utils.ServiceUtils;
+import com.blinked.repositories.BaseMetaRepository;
+import com.blinked.services.BaseMetaService;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
 /**

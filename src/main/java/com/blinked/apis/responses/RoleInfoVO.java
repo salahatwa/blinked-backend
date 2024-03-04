@@ -1,13 +1,14 @@
 package com.blinked.apis.responses;
 
+import com.api.common.model.ApiRs;
+import com.api.common.utils.HashIdsUtils;
 import com.blinked.entities.Role;
-import com.blinked.utils.HashIdsUtils;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
-public class RoleInfoVO {
+public class RoleInfoVO extends ApiRs {
 	@Schema(example = "A1PLgjPPlM8x", required = true)
 	private final String id;
 

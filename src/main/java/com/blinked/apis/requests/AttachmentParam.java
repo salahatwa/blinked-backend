@@ -1,11 +1,10 @@
 package com.blinked.apis.requests;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
+import com.api.common.model.InputConverter;
 import com.blinked.entities.Attachment;
-import com.blinked.repositories.base.InputConverter;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**

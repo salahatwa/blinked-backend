@@ -8,7 +8,6 @@ import org.springframework.lang.Nullable;
 
 import com.blinked.apis.responses.ProductRateWithProductVO;
 import com.blinked.entities.ProductRate;
-import com.blinked.services.base.BaseRateService;
 
 /**
  * Product Rate service interface.

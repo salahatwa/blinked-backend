@@ -2,16 +2,17 @@ package com.blinked.entities;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.GenericGenerator;
 
+import com.api.common.utils.CustomIdGenerator;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -34,14 +35,14 @@ public class ProductCategory extends AuditUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-	@GenericGenerator(name = "custom-id", strategy = "com.blinked.utils.CustomIdGenerator")
+	@GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
 	private Integer id;
 
 	/**
 	 * Category id.
 	 */
 	@Column(name = "category_id", nullable = false)
-	private Integer categoryId;
+	private String categoryId;
 
 	/**
 	 * Post id.

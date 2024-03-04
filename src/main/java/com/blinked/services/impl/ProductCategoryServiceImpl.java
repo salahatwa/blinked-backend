@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,19 +16,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import com.api.common.exception.NotFoundException;
+import com.api.common.repo.AbstractCrudService;
+import com.api.common.utils.ServiceUtils;
 import com.blinked.entities.Category;
 import com.blinked.entities.Product;
 import com.blinked.entities.ProductCategory;
 import com.blinked.entities.enums.ProductStatus;
 import com.blinked.entities.projection.CategoryProductCountProjection;
 import com.blinked.entities.projection.CategoryWithProductCountProjection;
-import com.blinked.exceptions.NotFoundException;
 import com.blinked.repositories.CategoryRepository;
-import com.blinked.repositories.ProductRepository;
-import com.blinked.repositories.base.AbstractCrudService;
 import com.blinked.repositories.ProductCategoryRepository;
+import com.blinked.repositories.ProductRepository;
 import com.blinked.services.ProductCategoryService;
-import com.blinked.utils.ServiceUtils;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 
 /**
  * Product category service implementation.
@@ -65,7 +66,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 		Assert.notNull(product, "Product id must not be null");
 
 		// Find all category ids
-		Set<Integer> categoryIds = productCategoryRepository.findAllCategoryIdsByProductId(product);
+		Set<String> categoryIds = productCategoryRepository.findAllCategoryIdsByProductId(product);
 
 		return categoryRepository.findAllById(categoryIds);
 	}
@@ -80,13 +81,13 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 		List<ProductCategory> postCategories = productCategoryRepository.findAllByProductIdIn(products);
 
 		// Fetch category ids
-		Set<Integer> categoryIds = ServiceUtils.fetchProperty(postCategories, ProductCategory::getCategoryId);
+		Set<String> categoryIds = ServiceUtils.fetchProperty(postCategories, ProductCategory::getCategoryId);
 
 		// Find all categories
 		List<Category> categories = categoryRepository.findAllById(categoryIds);
 
 		// Convert to category map
-		Map<Integer, Category> categoryMap = ServiceUtils.convertToMap(categories, Category::getId);
+		Map<String, Category> categoryMap = ServiceUtils.convertToMap(categories, Category::getId);
 
 		// Create category list map
 		Map<Integer, List<Category>> categoryListMap = new HashMap<>();
@@ -100,7 +101,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	}
 
 	@Override
-	public List<Product> listProductBy(Integer categoryId) {
+	public List<Product> listProductBy(String categoryId) {
 		Assert.notNull(categoryId, "Category id must not be null");
 
 		// Find all post ids
@@ -110,7 +111,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	}
 
 	@Override
-	public List<Product> listProductBy(Integer categoryId, ProductStatus status) {
+	public List<Product> listProductByCat(String categoryId, ProductStatus status) {
 		Assert.notNull(categoryId, "Category id must not be null");
 		Assert.notNull(status, "Product status must not be null");
 
@@ -134,7 +135,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	}
 
 	@Override
-	public Page<Product> pageProductBy(Integer categoryId, Pageable pageable) {
+	public Page<Product> pageProductBy(String categoryId, Pageable pageable) {
 		Assert.notNull(categoryId, "Category id must not be null");
 		Assert.notNull(pageable, "Page info must not be null");
 
@@ -145,7 +146,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	}
 
 	@Override
-	public Page<Product> pageProductBy(Integer categoryId, ProductStatus status, Pageable pageable) {
+	public Page<Product> pageProductBy(String categoryId, ProductStatus status, Pageable pageable) {
 		Assert.notNull(categoryId, "Category id must not be null");
 		Assert.notNull(status, "Product status must not be null");
 		Assert.notNull(pageable, "Page info must not be null");
@@ -157,7 +158,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	}
 
 	@Override
-	public List<ProductCategory> mergeOrCreateByIfAbsent(Integer product, Set<Integer> categoryIds) {
+	public List<ProductCategory> mergeOrCreateByIfAbsent(Integer product, Set<String> categoryIds) {
 		Assert.notNull(product, "Product id must not be null");
 
 		if (CollectionUtils.isEmpty(categoryIds)) {
@@ -220,14 +221,14 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	}
 
 	@Override
-	public List<ProductCategory> listByCategoryId(Integer categoryId) {
+	public List<ProductCategory> listByCategoryId(String categoryId) {
 		Assert.notNull(categoryId, "Category id must not be null");
 
 		return productCategoryRepository.findAllByCategoryId(categoryId);
 	}
 
 	@Override
-	public Set<Integer> listCategoryIdsByProductId(Integer product) {
+	public Set<String> listCategoryIdsByProductId(Integer product) {
 		Assert.notNull(product, "Product id must not be null");
 
 		return productCategoryRepository.findAllCategoryIdsByProductId(product);
@@ -241,7 +242,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	}
 
 	@Override
-	public List<ProductCategory> removeByCategoryId(Integer categoryId) {
+	public List<ProductCategory> removeByCategoryId(String categoryId) {
 		Assert.notNull(categoryId, "Category id must not be null");
 
 		return productCategoryRepository.deleteByCategoryId(categoryId);
@@ -254,7 +255,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 		List<Category> categories = categoryRepository.findAll(sort);
 
 		// Query category post count
-		Map<Integer, Long> categoryProductCountMap = ServiceUtils.convertToMap(
+		Map<String, Long> categoryProductCountMap = ServiceUtils.convertToMap(
 				productCategoryRepository.findProductCount(), CategoryProductCountProjection::getCategoryId,
 				CategoryProductCountProjection::getProductCount);
 
@@ -291,7 +292,7 @@ public class ProductCategoryServiceImpl extends AbstractCrudService<ProductCateg
 	public Object updateSequence(String table) {
 		Assert.notNull(table, "Product id must not be null");
 
-		javax.persistence.Query query = entityManager.createNativeQuery("SELECT setval(pg_get_serial_sequence('" + table
+		Query query = entityManager.createNativeQuery("SELECT setval(pg_get_serial_sequence('" + table
 				+ "', 'id'), coalesce(max(id)+1, 1), false) FROM " + table + ";");
 
 		Object result = query.getResultList();

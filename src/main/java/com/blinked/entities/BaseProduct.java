@@ -1,28 +1,31 @@
 package com.blinked.entities;
 
+import java.sql.Types;
 import java.util.Date;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
+import com.api.common.utils.CustomIdGenerator;
 import com.blinked.entities.enums.ProductStatus;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -48,7 +51,7 @@ public class BaseProduct extends AuditUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-	@GenericGenerator(name = "custom-id", strategy = "com.blinked.utils.CustomIdGenerator")
+	@GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
 	private Integer id;
 
 	/**
@@ -82,7 +85,8 @@ public class BaseProduct extends AuditUser {
 	 */
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Type(type = "text")
+//	@Type(type = "text")
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@Column(name = "template", nullable = false)
 	private String template;
 
@@ -91,7 +95,7 @@ public class BaseProduct extends AuditUser {
 	 */
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
-	@Type(type = "text")
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@Column(name = "summary")
 	private String summary;
 
@@ -111,7 +115,7 @@ public class BaseProduct extends AuditUser {
 	/**
 	 * Whether to allow rating.
 	 */
-	@Type(type = "numeric_boolean")
+	@Convert(converter = org.hibernate.type.NumericBooleanConverter.class)
 	@Column(name = "disallow_rate")
 	@ColumnDefault("0")
 	private Boolean disallowRate;
@@ -119,7 +123,7 @@ public class BaseProduct extends AuditUser {
 	/**
 	 * Whether to allow sale.
 	 */
-	@Type(type = "numeric_boolean")
+	@Convert(converter = org.hibernate.type.NumericBooleanConverter.class)
 	@Column(name = "active_sale")
 	@ColumnDefault("0")
 	private Boolean activeSale;
@@ -127,7 +131,7 @@ public class BaseProduct extends AuditUser {
 	/**
 	 * Whether to allow offer.
 	 */
-	@Type(type = "numeric_boolean")
+	@Convert(converter = org.hibernate.type.NumericBooleanConverter.class)
 	@Column(name = "active_offer")
 	@ColumnDefault("0")
 	private Boolean activeOffer;
@@ -234,7 +238,6 @@ public class BaseProduct extends AuditUser {
 			likes = 0L;
 		}
 
-		
 		if (wordCount == null || wordCount < 0) {
 			wordCount = 0L;
 		}
