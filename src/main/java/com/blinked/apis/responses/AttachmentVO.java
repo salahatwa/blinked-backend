@@ -18,7 +18,7 @@ import lombok.Data;
 @Data
 public class AttachmentVO extends ApiRs implements OutputConverter<AttachmentVO, Attachment> {
 
-	private Long id;
+	private String id;
 
 	private String name;
 

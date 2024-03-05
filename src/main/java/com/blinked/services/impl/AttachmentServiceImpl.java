@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class AttachmentServiceImpl extends AbstractCrudService<Attachment, Integer> implements AttachmentService {
+public class AttachmentServiceImpl extends AbstractCrudService<Attachment, String> implements AttachmentService {
 
 	private final AttachmentRepository attachmentRepository;
 
@@ -133,12 +133,12 @@ public class AttachmentServiceImpl extends AbstractCrudService<Attachment, Integ
 	}
 
 	@Override
-	public Attachment removePermanently(Integer id) {
+	public Attachment removePermanently(String id) {
 		// Remove it from database
 		Attachment deletedAttachment = removeById(id);
 
 		// Remove the file
-		fileHandlers.delete(deletedAttachment.getType(),deletedAttachment.getFileKey());
+		fileHandlers.delete(deletedAttachment.getType(), deletedAttachment.getFileKey());
 
 		log.debug("Deleted attachment: [{}]", deletedAttachment);
 
@@ -146,7 +146,7 @@ public class AttachmentServiceImpl extends AbstractCrudService<Attachment, Integ
 	}
 
 	@Override
-	public List<Attachment> removePermanently(@Nullable Collection<Integer> ids) {
+	public List<Attachment> removePermanently(@Nullable Collection<String> ids) {
 		if (CollectionUtils.isEmpty(ids)) {
 			return Collections.emptyList();
 		}

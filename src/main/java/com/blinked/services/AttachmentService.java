@@ -22,7 +22,7 @@ import com.blinked.entities.Attachment;
  * @author ssatwa
  * @date 2019-03-14
  */
-public interface AttachmentService extends CrudService<Attachment, Integer> {
+public interface AttachmentService extends CrudService<Attachment, String> {
 
 	 /**
      * Pages attachment output dtos.
@@ -52,7 +52,7 @@ public interface AttachmentService extends CrudService<Attachment, Integer> {
      * @return attachment detail deleted
      */
     @NonNull
-    Attachment removePermanently(@NonNull Integer id);
+    Attachment removePermanently(@NonNull String id);
 
     /**
      * Removes attachment permanently in batch.
@@ -61,7 +61,7 @@ public interface AttachmentService extends CrudService<Attachment, Integer> {
      * @return attachment detail list deleted
      */
     @NonNull
-    List<Attachment> removePermanently(@NonNull Collection<Integer> ids);
+    List<Attachment> removePermanently(@NonNull Collection<String> ids);
 
     /**
      * Converts to attachment output dto.

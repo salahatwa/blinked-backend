@@ -47,47 +47,48 @@ public class AttachmentController {
 
 	@GetMapping
 	public BaseResponse<Page<AttachmentVO>> pageBy(@CurrentUser AuthorizedUser user,
-			@PageableDefault(sort = "createTime", direction = DESC) Pageable pageable, AttachmentQuery attachmentQuery) {
+			@PageableDefault(sort = "createTime", direction = DESC) Pageable pageable,
+			AttachmentQuery attachmentQuery) {
 
 		return BaseResponse.ok(attachmentService.pageDtosBy(user, pageable, attachmentQuery));
 	}
 
-	@GetMapping("{id:\\d+}")
+	@GetMapping("{id}")
 	@Operation(summary = "Gets attachment detail by id")
-	public BaseResponse<AttachmentVO> getBy(@PathVariable("id") Integer id) {
+	public BaseResponse<AttachmentVO> getBy(@PathVariable("id") String id) {
 		Attachment attachment = attachmentService.getById(id);
 		return BaseResponse.ok(attachmentService.convertToDto(attachment));
 	}
 
-	@PutMapping("{attachmentId:\\d+}")
+	@PutMapping("{id}")
 	@Operation(summary = "Updates a attachment")
-	public BaseResponse<AttachmentVO> updateBy(@PathVariable("attachmentId") Integer attachmentId,
+	public BaseResponse<AttachmentVO> updateBy(@PathVariable("attachmentId") String id,
 			@RequestBody @Valid AttachmentParam attachmentParam) {
-		Attachment attachment = attachmentService.getById(attachmentId);
+		Attachment attachment = attachmentService.getById(id);
 		attachmentParam.update(attachment);
 		return BaseResponse.ok(new AttachmentVO().convertFrom(attachmentService.update(attachment)));
 	}
 
-	@DeleteMapping("{id:\\d+}")
+	@DeleteMapping("{id}")
 	@Operation(summary = "Deletes attachment permanently by id")
-	public BaseResponse<AttachmentVO> deletePermanently(@PathVariable("id") Integer id) {
+	public BaseResponse<AttachmentVO> deletePermanently(@PathVariable("id") String id) {
 		return BaseResponse.ok(attachmentService.convertToDto(attachmentService.removePermanently(id)));
 	}
 
 	@DeleteMapping
 	@Operation(summary = "Deletes attachments permanently in batch by id array")
-	public BaseResponse<List<Attachment>> deletePermanentlyInBatch(@RequestBody List<Integer> ids) {
+	public BaseResponse<List<Attachment>> deletePermanentlyInBatch(@RequestBody List<String> ids) {
 		return BaseResponse.ok(attachmentService.removePermanently(ids));
 	}
 
-	@PostMapping("upload")
+	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "Uploads single file")
 	public BaseResponse<AttachmentVO> uploadAttachment(@RequestPart("file") MultipartFile file) {
 		return BaseResponse.ok(attachmentService.convertToDto(attachmentService.upload(file)));
 	}
 
 	@PostMapping(value = "uploads", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@Operation(summary = "Uploads multi files (Invalid in Swagger UI)")
+	@Operation(summary = "Uploads multi files")
 	public BaseResponse<List<AttachmentVO>> uploadAttachments(@RequestPart("files") MultipartFile[] files) {
 		List<AttachmentVO> result = new LinkedList<>();
 

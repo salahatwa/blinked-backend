@@ -17,7 +17,7 @@ import com.blinked.entities.Attachment;
  * @date 2019-04-03
  */
 public interface AttachmentRepository
-		extends BaseRepository<Attachment, Integer>, JpaSpecificationExecutor<Attachment> {
+		extends BaseRepository<Attachment, String>, JpaSpecificationExecutor<Attachment> {
 
 	/**
 	 * Find all attachment media type.

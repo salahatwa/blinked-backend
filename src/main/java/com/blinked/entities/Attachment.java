@@ -1,13 +1,12 @@
 package com.blinked.entities;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.UuidGenerator;
 
 import com.api.common.attachment.AttachmentType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
@@ -26,8 +25,8 @@ import lombok.Data;
 public class Attachment extends AuditUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@UuidGenerator
+	private String id;
 
 	/**
 	 * Attachment name.
