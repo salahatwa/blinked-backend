@@ -32,7 +32,7 @@ public class ProductDetailVO extends BaseProductDetailDTO {
 
 	private List<CategoryDTO> categories;
 
-	private Set<Long> metaIds;
+	private Set<String> metaIds;
 
 	private List<BaseMetaDTO> metas;
 

@@ -1,15 +1,11 @@
 package com.blinked.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import com.api.common.utils.CustomIdGenerator;
+import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -30,9 +26,8 @@ import lombok.ToString;
 public class BaseMeta extends AuditUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-	@GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
-	private Long id;
+	@UuidGenerator
+	private String id;
 
 	
 	@Column(name = "product_id", nullable = false)

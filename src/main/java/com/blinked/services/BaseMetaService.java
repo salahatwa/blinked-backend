@@ -17,7 +17,7 @@ import com.blinked.entities.dto.BaseMetaDTO;
  * @author ssatwa
  * @date 2019-08-04
  */
-public interface BaseMetaService<META extends BaseMeta> extends CrudService<META, Long> {
+public interface BaseMetaService<META extends BaseMeta> extends CrudService<META, String> {
 
 	/**
 	 * Creates by product metas and product id.

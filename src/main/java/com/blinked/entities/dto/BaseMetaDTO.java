@@ -20,9 +20,9 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class BaseMetaDTO extends ApiRs implements OutputConverter<BaseMetaDTO, BaseMeta> {
-	private Long id;
+	private String id;
 
-	private Integer postId;
+	private Integer productId;
 
 	private String key;
 

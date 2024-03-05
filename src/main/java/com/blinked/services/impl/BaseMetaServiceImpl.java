@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2019-08-04
  */
 @Slf4j
-public abstract class BaseMetaServiceImpl<META extends BaseMeta> extends AbstractCrudService<META, Long>
+public abstract class BaseMetaServiceImpl<META extends BaseMeta> extends AbstractCrudService<META, String>
 		implements BaseMetaService<META> {
 
 	private final BaseMetaRepository<META> baseMetaRepository;
@@ -44,11 +44,11 @@ public abstract class BaseMetaServiceImpl<META extends BaseMeta> extends Abstrac
 
 	@Override
 	@Transactional
-	public List<META> createOrUpdateByProductId(@NotNull Integer postId, Set<META> metas) {
-		Assert.notNull(postId, "Product id must not be null");
+	public List<META> createOrUpdateByProductId(@NotNull Integer productId, Set<META> metas) {
+		Assert.notNull(productId, "Product id must not be null");
 
 		// firstly remove post metas by post id
-		removeByProductId(postId);
+		removeByProductId(productId);
 
 		if (CollectionUtils.isEmpty(metas)) {
 			return Collections.emptyList();
@@ -57,7 +57,7 @@ public abstract class BaseMetaServiceImpl<META extends BaseMeta> extends Abstrac
 		// Save post metas
 		metas.forEach(postMeta -> {
 			if (StringUtils.isNotEmpty(postMeta.getValue()) && StringUtils.isNotEmpty(postMeta.getKey())) {
-				postMeta.setProductId(postId);
+				postMeta.setProductId(productId);
 				baseMetaRepository.save(postMeta);
 			}
 		});
@@ -65,38 +65,38 @@ public abstract class BaseMetaServiceImpl<META extends BaseMeta> extends Abstrac
 	}
 
 	@Override
-	public List<META> removeByProductId(@NotNull Integer postId) {
-		Assert.notNull(postId, "Product id must not be null of removeByProductId");
-		return baseMetaRepository.deleteByProductId(postId);
+	public List<META> removeByProductId(@NotNull Integer productId) {
+		Assert.notNull(productId, "Product id must not be null of removeByProductId");
+		return baseMetaRepository.deleteByProductId(productId);
 	}
 
 	@Override
-	public Map<Integer, List<META>> listProductMetaAsMap(@NotNull Set<Integer> postIds) {
-		Assert.notNull(postIds, "Product ids must not be null");
-		if (CollectionUtils.isEmpty(postIds)) {
+	public Map<Integer, List<META>> listProductMetaAsMap(@NotNull Set<Integer> productIds) {
+		Assert.notNull(productIds, "Product ids must not be null");
+		if (CollectionUtils.isEmpty(productIds)) {
 			return Collections.emptyMap();
 		}
 
 		// Find all metas
-		List<META> metas = baseMetaRepository.findAllByProductIdIn(postIds);
+		List<META> metas = baseMetaRepository.findAllByProductIdIn(productIds);
 
 		// Convert to meta map
-		Map<Long, META> postMetaMap = ServiceUtils.convertToMap(metas, META::getId);
+		Map<String, META> postMetaMap = ServiceUtils.convertToMap(metas, META::getId);
 
 		// Create category list map
 		Map<Integer, List<META>> postMetaListMap = new HashMap<>();
 
 		// Foreach and collect
-		metas.forEach(meta -> postMetaListMap.computeIfAbsent(meta.getProductId(), postId -> new LinkedList<>())
+		metas.forEach(meta -> postMetaListMap.computeIfAbsent(meta.getProductId(), productId -> new LinkedList<>())
 				.add(postMetaMap.get(meta.getId())));
 
 		return postMetaListMap;
 	}
 
 	@Override
-	public @NotNull List<META> listBy(@NotNull Integer postId) {
-		Assert.notNull(postId, "Product id must not be null");
-		return baseMetaRepository.findAllByProductId(postId);
+	public @NotNull List<META> listBy(@NotNull Integer productId) {
+		Assert.notNull(productId, "Product id must not be null");
+		return baseMetaRepository.findAllByProductId(productId);
 	}
 
 	@Override

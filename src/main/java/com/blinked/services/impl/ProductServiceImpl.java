@@ -553,7 +553,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 		// Extract ids
 		Set<String> tagIds = ServiceUtils.fetchProperty(tags, Tag::getId);
 		Set<String> categoryIds = ServiceUtils.fetchProperty(categories, Category::getId);
-		Set<Long> metaIds = ServiceUtils.fetchProperty(productMetaList, ProductMeta::getId);
+		Set<String> metaIds = ServiceUtils.fetchProperty(productMetaList, ProductMeta::getId);
 
 		// Get product tag ids
 		productDetailVO.setTagIds(tagIds);

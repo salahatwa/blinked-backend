@@ -27,8 +27,6 @@ import lombok.ToString;
 public class Category extends AuditUser {
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-//	@GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
 	@UuidGenerator
 	private String id;
 

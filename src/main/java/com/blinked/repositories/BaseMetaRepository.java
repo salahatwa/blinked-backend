@@ -18,7 +18,7 @@ import com.blinked.entities.BaseMeta;
  */
 @NoRepositoryBean
 public interface BaseMetaRepository<META extends BaseMeta>
-		extends BaseRepository<META, Long>, JpaSpecificationExecutor<META> {
+		extends BaseRepository<META, String>, JpaSpecificationExecutor<META> {
 
 	/**
 	 * Finds all metas by product id.
