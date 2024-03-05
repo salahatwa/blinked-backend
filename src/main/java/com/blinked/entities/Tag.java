@@ -1,13 +1,9 @@
 package com.blinked.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import com.api.common.utils.CustomIdGenerator;
+import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
@@ -29,9 +25,8 @@ import lombok.ToString;
 public class Tag extends AuditUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-	@GenericGenerator(name = "custom-id", type = CustomIdGenerator.class)
-	private Integer id;
+	@UuidGenerator
+	private String id;
 
 	/**
 	 * Tag name.

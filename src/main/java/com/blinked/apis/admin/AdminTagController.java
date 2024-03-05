@@ -68,15 +68,15 @@ public class AdminTagController {
 		return BaseResponse.ok(tagService.convertTo(tagService.create(tag)));
 	}
 
-	@GetMapping("{tagId:\\d+}")
+	@GetMapping("{tagId}")
 	@Operation(summary = "Gets tag detail by id")
-	public BaseResponse<TagDTO> getBy(@PathVariable("tagId") Integer tagId) {
+	public BaseResponse<TagDTO> getBy(@PathVariable("tagId") String tagId) {
 		return BaseResponse.ok(tagService.convertTo(tagService.getById(tagId)));
 	}
 
-	@PutMapping("{tagId:\\d+}")
+	@PutMapping("{tagId}")
 	@Operation(summary = "Updates a tag")
-	public BaseResponse<TagDTO> updateBy(@PathVariable("tagId") Integer tagId, @Valid @RequestBody TagParam tagParam) {
+	public BaseResponse<TagDTO> updateBy(@PathVariable("tagId") String tagId, @Valid @RequestBody TagParam tagParam) {
 		// Get old tag
 		Tag tag = tagService.getById(tagId);
 
@@ -87,9 +87,9 @@ public class AdminTagController {
 		return BaseResponse.ok(tagService.convertTo(tagService.update(tag)));
 	}
 
-	@DeleteMapping("{tagId:\\d+}")
+	@DeleteMapping("{tagId}")
 	@Operation(summary = "Deletes a tag")
-	public BaseResponse<TagDTO> deletePermanently(@PathVariable("tagId") Integer tagId) {
+	public BaseResponse<TagDTO> deletePermanently(@PathVariable("tagId") String tagId) {
 		// Remove the tag
 		Tag deletedTag = tagService.removeById(tagId);
 		// Remove the post tag relationship

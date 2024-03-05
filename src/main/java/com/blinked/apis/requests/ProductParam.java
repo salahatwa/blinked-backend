@@ -58,7 +58,7 @@ public class ProductParam implements InputConverter<Product> {
 
 	private String metaDescription;
 
-	private Set<Integer> tagIds;
+	private Set<String> tagIds;
 
 	private Set<String> categoryIds;
 

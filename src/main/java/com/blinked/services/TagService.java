@@ -15,7 +15,7 @@ import com.blinked.entities.dto.TagDTO;
  * @author ssatwa
  * @date 2019-03-14
  */
-public interface TagService extends CrudService<Tag, Integer> {
+public interface TagService extends CrudService<Tag, String> {
 
 	/**
 	 * Get tag by slug

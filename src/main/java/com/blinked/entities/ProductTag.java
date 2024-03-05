@@ -42,7 +42,7 @@ public class ProductTag extends AuditUser {
 	private Integer productId;
 
 	@Column(name = "tag_id", nullable = false)
-	private Integer tagId;
+	private String tagId;
 
 	@Override
 	public boolean equals(Object o) {

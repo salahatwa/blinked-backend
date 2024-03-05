@@ -37,7 +37,7 @@ public interface ProductTagRepository extends BaseRepository<ProductTag, Integer
 	 */
 	@Query("select productTag.tagId from ProductTag productTag where productTag.productId = ?1")
 	@NonNull
-	Set<Integer> findAllTagIdsByProductId(@NonNull Integer productId);
+	Set<String> findAllTagIdsByProductId(@NonNull Integer productId);
 
 	/**
 	 * Finds all product tags by tag id.
@@ -46,7 +46,7 @@ public interface ProductTagRepository extends BaseRepository<ProductTag, Integer
 	 * @return a list of product tags
 	 */
 	@NonNull
-	List<ProductTag> findAllByTagId(@NonNull Integer tagId);
+	List<ProductTag> findAllByTagId(@NonNull String tagId);
 
 	/**
 	 * Finds all product id by tag id.
@@ -56,7 +56,7 @@ public interface ProductTagRepository extends BaseRepository<ProductTag, Integer
 	 */
 	@Query("select productTag.productId from ProductTag productTag where productTag.tagId = ?1")
 	@NonNull
-	Set<Integer> findAllProductIdsByTagId(@NonNull Integer tagId);
+	Set<Integer> findAllProductIdsByTagId(@NonNull String tagId);
 
 	/**
 	 * Finds all product id by tag id and product status.
@@ -67,7 +67,7 @@ public interface ProductTagRepository extends BaseRepository<ProductTag, Integer
 	 */
 	@Query("select productTag.productId from ProductTag productTag,Product product where productTag.tagId = ?1 and product.id = productTag.productId and product.status = ?2")
 	@NonNull
-	Set<Integer> findAllProductIdsByTagId(@NonNull Integer tagId, @NonNull ProductStatus status);
+	Set<Integer> findAllProductIdsByTagId(@NonNull String tagId, @NonNull ProductStatus status);
 
 	/**
 	 * Finds all tags by product id in.
@@ -94,7 +94,7 @@ public interface ProductTagRepository extends BaseRepository<ProductTag, Integer
 	 * @return a list of product tag deleted
 	 */
 	@NonNull
-	List<ProductTag> deleteByTagId(@NonNull Integer tagId);
+	List<ProductTag> deleteByTagId(@NonNull String tagId);
 
 	/**
 	 * Finds product count by tag id collection.
@@ -104,7 +104,7 @@ public interface ProductTagRepository extends BaseRepository<ProductTag, Integer
 	 */
 	@Query("select new com.blinked.entities.projection.TagProductCountProjection(count(pt.productId), pt.tagId) from ProductTag pt where pt.tagId in ?1 group by pt.tagId")
 	@NonNull
-	List<TagProductCountProjection> findProductCountByTagIds(@NonNull Collection<Integer> tagIds);
+	List<TagProductCountProjection> findProductCountByTagIds(@NonNull Collection<String> tagIds);
 
 	/**
 	 * Finds product count of tag.

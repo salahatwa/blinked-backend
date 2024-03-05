@@ -58,7 +58,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 		Assert.notNull(productId, "Product id must not be null");
 
 		// Find all tag ids
-		Set<Integer> tagIds = productTagRepository.findAllTagIdsByProductId(productId);
+		Set<String> tagIds = productTagRepository.findAllTagIdsByProductId(productId);
 
 		return tagRepository.findAllById(tagIds);
 	}
@@ -71,7 +71,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 		List<Tag> tags = tagRepository.findAll(sort);
 
 		// Find all product count
-		Map<Integer, Long> tagProductCountMap = ServiceUtils.convertToMap(productTagRepository.findProductCount(),
+		Map<String, Long> tagProductCountMap = ServiceUtils.convertToMap(productTagRepository.findProductCount(),
 				TagProductCountProjection::getTagId, TagProductCountProjection::getProductCount);
 
 		// Find product count
@@ -97,13 +97,13 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 		List<ProductTag> productTags = productTagRepository.findAllByProductIdIn(productIds);
 
 		// Fetch tag ids
-		Set<Integer> tagIds = ServiceUtils.fetchProperty(productTags, ProductTag::getTagId);
+		Set<String> tagIds = ServiceUtils.fetchProperty(productTags, ProductTag::getTagId);
 
 		// Find all tags
 		List<Tag> tags = tagRepository.findAllById(tagIds);
 
 		// Convert to tag map
-		Map<Integer, Tag> tagMap = ServiceUtils.convertToMap(tags, Tag::getId);
+		Map<String, Tag> tagMap = ServiceUtils.convertToMap(tags, Tag::getId);
 
 		// Create tag list map
 		Map<Integer, List<Tag>> tagListMap = new HashMap<>();
@@ -117,7 +117,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 	}
 
 	@Override
-	public List<Product> listProductsBy(Integer tagId) {
+	public List<Product> listProductsBy(String tagId) {
 		Assert.notNull(tagId, "Tag id must not be null");
 
 		// Find all product ids
@@ -127,7 +127,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 	}
 
 	@Override
-	public List<Product> listProductsBy(Integer tagId, ProductStatus status) {
+	public List<Product> listProductsTagBy(String tagId, ProductStatus status) {
 		Assert.notNull(tagId, "Tag id must not be null");
 		Assert.notNull(status, "Product status must not be null");
 
@@ -143,7 +143,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 		Assert.notNull(status, "Product status must not be null");
 
 		Tag tag = tagRepository.getBySlug(slug)
-				.orElseThrow(() -> new NotFoundException("查询不到该标签的信息").setErrorData(slug));
+				.orElseThrow(() -> new NotFoundException("Cannot find information about this tag").setErrorData(slug));
 
 		Set<Integer> productIds = productTagRepository.findAllProductIdsByTagId(tag.getId(), status);
 
@@ -151,7 +151,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 	}
 
 	@Override
-	public Page<Product> pageProductsBy(Integer tagId, Pageable pageable) {
+	public Page<Product> pageProductsBy(String tagId, Pageable pageable) {
 		Assert.notNull(tagId, "Tag id must not be null");
 		Assert.notNull(pageable, "Page info must not be null");
 
@@ -162,7 +162,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 	}
 
 	@Override
-	public Page<Product> pageProductsBy(Integer tagId, ProductStatus status, Pageable pageable) {
+	public Page<Product> pageProductsBy(String tagId, ProductStatus status, Pageable pageable) {
 		Assert.notNull(tagId, "Tag id must not be null");
 		Assert.notNull(status, "Product status must not be null");
 		Assert.notNull(pageable, "Page info must not be null");
@@ -174,7 +174,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 	}
 
 	@Override
-	public List<ProductTag> mergeOrCreateByIfAbsent(Integer productId, Set<Integer> tagIds) {
+	public List<ProductTag> mergeOrCreateByIfAbsent(Integer productId, Set<String> tagIds) {
 		Assert.notNull(productId, "Product id must not be null");
 
 		if (CollectionUtils.isEmpty(tagIds)) {
@@ -228,14 +228,14 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 	}
 
 	@Override
-	public List<ProductTag> listByTagId(Integer tagId) {
+	public List<ProductTag> listByTagId(String tagId) {
 		Assert.notNull(tagId, "Tag id must not be null");
 
 		return productTagRepository.findAllByTagId(tagId);
 	}
 
 	@Override
-	public Set<Integer> listTagIdsByProductId(Integer productId) {
+	public Set<String> listTagIdsByProductId(Integer productId) {
 		Assert.notNull(productId, "Product id must not be null");
 
 		return productTagRepository.findAllTagIdsByProductId(productId);
@@ -249,7 +249,7 @@ public class ProductTagServiceImpl extends AbstractCrudService<ProductTag, Integ
 	}
 
 	@Override
-	public List<ProductTag> removeByTagId(Integer tagId) {
+	public List<ProductTag> removeByTagId(String tagId) {
 		Assert.notNull(tagId, "Tag id must not be null");
 
 		return productTagRepository.deleteByTagId(tagId);

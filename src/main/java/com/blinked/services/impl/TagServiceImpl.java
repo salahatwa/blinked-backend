@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class TagServiceImpl extends AbstractCrudService<Tag, Integer> implements TagService {
+public class TagServiceImpl extends AbstractCrudService<Tag, String> implements TagService {
 
 	private final TagRepository tagRepository;
 

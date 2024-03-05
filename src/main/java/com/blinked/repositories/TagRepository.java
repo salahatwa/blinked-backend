@@ -12,7 +12,7 @@ import com.blinked.entities.Tag;
  *
  * @author ssatwa
  */
-public interface TagRepository extends BaseRepository<Tag, Integer> {
+public interface TagRepository extends BaseRepository<Tag, String> {
 
 	/**
 	 * Count by name or slug.

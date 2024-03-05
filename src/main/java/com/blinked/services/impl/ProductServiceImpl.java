@@ -133,7 +133,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 
 	@Override
 	@Transactional
-	public ProductDetailVO createBy(Product productToCreate, Set<Integer> tagIds, Set<String> categoryIds,
+	public ProductDetailVO createBy(Product productToCreate, Set<String> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave) {
 		ProductDetailVO createdProduct = createOrUpdate(productToCreate, tagIds, categoryIds, metas);
 
@@ -141,7 +141,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 	}
 
 	@Override
-	public ProductDetailVO createBy(Product productToCreate, Set<Integer> tagIds, Set<String> categoryIds,
+	public ProductDetailVO createBy(Product productToCreate, Set<String> tagIds, Set<String> categoryIds,
 			boolean autoSave) {
 		ProductDetailVO createdProduct = createOrUpdate(productToCreate, tagIds, categoryIds, null);
 
@@ -150,7 +150,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 
 	@Override
 	@Transactional
-	public ProductDetailVO updateBy(Product productToUpdate, Set<Integer> tagIds, Set<String> categoryIds,
+	public ProductDetailVO updateBy(Product productToUpdate, Set<String> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave) {
 		// Set edit time
 		productToUpdate.setEditTime(DateUtils.now());
@@ -551,7 +551,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 		ProductDetailVO productDetailVO = new ProductDetailVO().convertFrom(product);
 
 		// Extract ids
-		Set<Integer> tagIds = ServiceUtils.fetchProperty(tags, Tag::getId);
+		Set<String> tagIds = ServiceUtils.fetchProperty(tags, Tag::getId);
 		Set<String> categoryIds = ServiceUtils.fetchProperty(categories, Category::getId);
 		Set<Long> metaIds = ServiceUtils.fetchProperty(productMetaList, ProductMeta::getId);
 
@@ -613,7 +613,7 @@ public class ProductServiceImpl extends BaseProductServiceImpl<Product> implemen
 		};
 	}
 
-	private ProductDetailVO createOrUpdate(@NonNull Product product, Set<Integer> tagIds, Set<String> categoryIds,
+	private ProductDetailVO createOrUpdate(@NonNull Product product, Set<String> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas) {
 		Assert.notNull(product, "Product param must not be null");
 

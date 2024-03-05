@@ -62,7 +62,7 @@ public interface ProductService extends BaseProductService<Product> {
 	 * @return product created
 	 */
 	@NonNull
-	ProductDetailVO createBy(@NonNull Product product, Set<Integer> tagIds, Set<String> categoryIds,
+	ProductDetailVO createBy(@NonNull Product product, Set<String> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave);
 
 	/**
@@ -75,7 +75,7 @@ public interface ProductService extends BaseProductService<Product> {
 	 * @return product created
 	 */
 	@NonNull
-	ProductDetailVO createBy(@NonNull Product product, Set<Integer> tagIds, Set<String> categoryIds, boolean autoSave);
+	ProductDetailVO createBy(@NonNull Product product, Set<String> tagIds, Set<String> categoryIds, boolean autoSave);
 
 	/**
 	 * Updates product by product, tag id set and category id set.
@@ -88,7 +88,7 @@ public interface ProductService extends BaseProductService<Product> {
 	 * @return updated product
 	 */
 	@NonNull
-	ProductDetailVO updateBy(@NonNull Product productToUpdate, Set<Integer> tagIds, Set<String> categoryIds,
+	ProductDetailVO updateBy(@NonNull Product productToUpdate, Set<String> tagIds, Set<String> categoryIds,
 			Set<ProductMeta> metas, boolean autoSave);
 
 	/**

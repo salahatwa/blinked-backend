@@ -24,7 +24,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class ProductDetailVO extends BaseProductDetailDTO {
 
-	private Set<Integer> tagIds;
+	private Set<String> tagIds;
 
 	private List<TagDTO> tags;
 

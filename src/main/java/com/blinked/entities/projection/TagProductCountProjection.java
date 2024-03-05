@@ -21,6 +21,6 @@ public class TagProductCountProjection {
 	/**
 	 * Tag id
 	 */
-	private Integer tagId;
+	private String tagId;
 
 }

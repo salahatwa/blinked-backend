@@ -18,7 +18,7 @@ import lombok.Data;
 @Data
 public class TagDTO extends ApiRs implements OutputConverter<TagDTO, Tag> {
 
-	private Integer id;
+	private String id;
 
 	private String name;
 

@@ -61,7 +61,7 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 * @return a list of post
 	 */
 	@NonNull
-	List<Product> listProductsBy(@NonNull Integer tagId);
+	List<Product> listProductsBy(@NonNull String tagId);
 
 	/**
 	 * Lists posts by tag id and post status.
@@ -71,7 +71,7 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 * @return a list of post
 	 */
 	@NonNull
-	List<Product> listProductsBy(@NonNull Integer tagId, @NonNull ProductStatus status);
+	List<Product> listProductsTagBy(@NonNull String tagId, @NonNull ProductStatus status);
 
 	/**
 	 * Lists posts by tag slug and post status.
@@ -90,7 +90,7 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 * @param pageable must not be null
 	 * @return a page of post
 	 */
-	Page<Product> pageProductsBy(@NonNull Integer tagId, Pageable pageable);
+	Page<Product> pageProductsBy(@NonNull String tagId, Pageable pageable);
 
 	/**
 	 * Pages posts by tag id and post status.
@@ -100,7 +100,7 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 * @param pageable must not be null
 	 * @return a page of post
 	 */
-	Page<Product> pageProductsBy(@NonNull Integer tagId, @NonNull ProductStatus status, Pageable pageable);
+	Page<Product> pageProductsBy(@NonNull String tagId, @NonNull ProductStatus status, Pageable pageable);
 
 	/**
 	 * Merges or creates post tags by productId and tag id set if absent.
@@ -110,7 +110,7 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 * @return a list of post tag
 	 */
 	@NonNull
-	List<ProductTag> mergeOrCreateByIfAbsent(@NonNull Integer productId, @Nullable Set<Integer> tagIds);
+	List<ProductTag> mergeOrCreateByIfAbsent(@NonNull Integer productId, @Nullable Set<String> tagIds);
 
 	/**
 	 * Lists post tags by productId.
@@ -128,7 +128,7 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 * @return a list of post tag
 	 */
 	@NonNull
-	List<ProductTag> listByTagId(@NonNull Integer tagId);
+	List<ProductTag> listByTagId(@NonNull String tagId);
 
 	/**
 	 * Lists tag id set by productId.
@@ -137,7 +137,7 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 * @return a set of tag id
 	 */
 	@NonNull
-	Set<Integer> listTagIdsByProductId(@NonNull Integer productId);
+	Set<String> listTagIdsByProductId(@NonNull Integer productId);
 
 	/**
 	 * Removes post tags by productId.
@@ -157,5 +157,5 @@ public interface ProductTagService extends CrudService<ProductTag, Integer> {
 	 */
 	@NonNull
 	@Transactional
-	List<ProductTag> removeByTagId(@NonNull Integer tagId);
+	List<ProductTag> removeByTagId(@NonNull String tagId);
 }
