@@ -4,21 +4,23 @@ import static com.api.common.utils.Random.code;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.UuidGenerator;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "recovery")
 public class Recovery {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@UuidGenerator
+	private String id;
 
 	@Column(name = "code", nullable = false)
 	private String code;
@@ -45,50 +47,7 @@ public class Recovery {
 		this.code = code();
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public void setExpiresIn(LocalDateTime expiresAt) {
-		this.expiresAt = expiresAt;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Boolean isConfirmed() {
-		return confirmed;
-	}
-
-	public void setConfirmed(Boolean confirmed) {
-		this.confirmed = confirmed;
-	}
-
-	public Boolean isUsed() {
-		return used;
-	}
-
-	public void setUsed(Boolean used) {
-		this.used = used;
-	}
-
+	
 	public Boolean nonExpired() {
 		return expiresAt.isAfter(LocalDateTime.now());
 	}

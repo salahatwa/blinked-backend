@@ -11,7 +11,7 @@ import com.blinked.entities.User;
 
 import jakarta.transaction.Transactional;
 
-public interface RefreshTokenRepository extends BaseRepository<RefreshToken, Long> {
+public interface RefreshTokenRepository extends BaseRepository<RefreshToken, String> {
 	@Transactional
 	@Modifying
 	@Query("UPDATE RefreshToken SET available = false WHERE user = ?1 AND available = true")

@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class RecoveryServiceImpl extends AbstractCrudService<Recovery, Long> implements RecoveryService {
+public class RecoveryServiceImpl extends AbstractCrudService<Recovery, String> implements RecoveryService {
 
 	private final UserRepository userRepository;
 	private final RecoveryRepository recoveries;

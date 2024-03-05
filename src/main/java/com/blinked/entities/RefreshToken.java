@@ -1,15 +1,15 @@
 package com.blinked.entities;
 
+import static jakarta.persistence.FetchType.EAGER;
 import static java.time.LocalDateTime.now;
 import static java.util.UUID.randomUUID;
-import static jakarta.persistence.FetchType.EAGER;
-import static jakarta.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.UuidGenerator;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,8 +23,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RefreshToken implements Serializable {
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	private Long id;
+	@UuidGenerator
+	private String id;
 
 	private String code;
 
