@@ -22,7 +22,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class BaseRateDTO extends ApiRs implements OutputConverter<BaseRateDTO, BaseRate> {
 
-	private Long id;
+	private String id;
 
 	private String author;
 
@@ -40,7 +40,7 @@ public class BaseRateDTO extends ApiRs implements OutputConverter<BaseRateDTO, B
 
 	private String userAgent;
 
-	private Long parentId;
+	private String parentId;
 
 	private Boolean isAdmin;
 

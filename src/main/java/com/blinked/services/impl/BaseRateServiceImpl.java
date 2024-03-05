@@ -22,7 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
@@ -33,7 +32,6 @@ import org.springframework.util.CollectionUtils;
 import com.api.common.exception.NotFoundException;
 import com.api.common.repo.AbstractCrudService;
 import com.api.common.utils.ServiceUtils;
-import com.api.common.utils.ServletUtils;
 import com.blinked.apis.requests.BaseRateParam;
 import com.blinked.apis.requests.RatePage;
 import com.blinked.apis.requests.RateQuery;
@@ -60,7 +58,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2019-04-24
  */
 @Slf4j
-public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends AbstractCrudService<RATE, Long>
+public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends AbstractCrudService<RATE, String>
 		implements BaseRateService<RATE> {
 
 	protected final UserService userService;
@@ -183,15 +181,15 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 		List<RATE> rates = ratePage.getContent();
 
 		// Get all rate parent ids
-		Set<Long> parentIds = ServiceUtils.fetchProperty(rates, RATE::getParentId);
+		Set<String> parentIds = ServiceUtils.fetchProperty(rates, RATE::getParentId);
 
 		// Get all parent rates
 		List<RATE> parentRates = baseRateRepository.findAllByIdIn(parentIds, pageable.getSort());
 
 		// Convert to rate map (Key: rate id, value: rate)
-		Map<Long, RATE> parentRateMap = ServiceUtils.convertToMap(parentRates, RATE::getId);
+		Map<String, RATE> parentRateMap = ServiceUtils.convertToMap(parentRates, RATE::getId);
 
-		Map<Long, BaseRateWithParentVO> parentRateVoMap = new HashMap<>(parentRateMap.size());
+		Map<String, BaseRateWithParentVO> parentRateVoMap = new HashMap<>(parentRateMap.size());
 
 		// Convert to rate page
 		return ratePage.map(rate -> {
@@ -254,7 +252,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 		}
 
 		// Check parent id
-		if (!ServiceUtils.isEmptyId(rate.getParentId())) {
+		if (!StringUtils.isBlank(rate.getParentId())) {
 			try {
 				mustExistById(rate.getParentId());
 			} catch (Exception e) {
@@ -328,7 +326,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 	}
 
 	@Override
-	public RATE updateStatus(Long rateId, RateStatus status) {
+	public RATE updateStatus(String rateId, RateStatus status) {
 		Assert.notNull(rateId, "Rate id must not be null");
 		Assert.notNull(status, "Rate status must not be null");
 
@@ -343,7 +341,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 	}
 
 	@Override
-	public List<RATE> updateStatusByIds(List<Long> ids, RateStatus status) {
+	public List<RATE> updateStatusByIds(List<String> ids, RateStatus status) {
 		if (CollectionUtils.isEmpty(ids)) {
 			return Collections.emptyList();
 		}
@@ -359,7 +357,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 	}
 
 	@Override
-	public RATE removeById(Long id) {
+	public RATE removeById(String id) {
 		Assert.notNull(id, "Rate id must not be null");
 
 		RATE rate = baseRateRepository.findById(id)
@@ -377,7 +375,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 	}
 
 	@Override
-	public List<RATE> removeByIds(Collection<Long> ids) {
+	public List<RATE> removeByIds(Collection<String> ids) {
 		if (CollectionUtils.isEmpty(ids)) {
 			return Collections.emptyList();
 		}
@@ -464,7 +462,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 
 		// Init the top virtual rate
 		BaseRateVO topVirtualRate = new BaseRateVO();
-		topVirtualRate.setId(0L);
+		topVirtualRate.setId("");
 		topVirtualRate.setChildren(new LinkedList<>());
 
 		// Concrete the rate tree
@@ -480,7 +478,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 		Assert.notNull(pageable, "Page info must not be null");
 
 		// Get all rates
-		Page<RATE> topRatePage = baseRateRepository.findAllByProductIdAndStatusAndParentId(targetId, status, 0L,
+		Page<RATE> topRatePage = baseRateRepository.findAllByProductIdAndStatusAndParentId(targetId, status, "",
 				pageable);
 
 //		if (topRatePage.isEmpty()) {
@@ -489,13 +487,13 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 //		}
 
 		// Get top rate ids
-		Set<Long> topRateIds = ServiceUtils.fetchProperty(topRatePage.getContent(), BaseRate::getId);
+		Set<String> topRateIds = ServiceUtils.fetchProperty(topRatePage.getContent(), BaseRate::getId);
 
 		// Get direct children count
 		List<RateChildrenCountProjection> directChildrenCount = baseRateRepository.findDirectChildrenCount(topRateIds);
 
 		// Convert to rate - children count map
-		Map<Long, Long> rateChildrenCountMap = ServiceUtils.convertToMap(directChildrenCount,
+		Map<String, Long> rateChildrenCountMap = ServiceUtils.convertToMap(directChildrenCount,
 				RateChildrenCountProjection::getRateId, RateChildrenCountProjection::getDirectChildrenCount);
 
 		// Convert to rate with has children vo
@@ -507,7 +505,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 	}
 
 	@Override
-	public List<RATE> listChildrenBy(Integer targetId, Long rateParentId, RateStatus status, Sort sort) {
+	public List<RATE> listChildrenBy(Integer targetId, String rateParentId, RateStatus status, Sort sort) {
 		Assert.notNull(targetId, "Target id must not be null");
 		Assert.notNull(rateParentId, "Rate parent id must not be null");
 		Assert.notNull(sort, "Sort info must not be null");
@@ -532,7 +530,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 	}
 
 	@Override
-	public List<RATE> listChildrenBy(Integer targetId, Long rateParentId, Sort sort) {
+	public List<RATE> listChildrenBy(Integer targetId, String rateParentId, Sort sort) {
 		Assert.notNull(targetId, "Target id must not be null");
 		Assert.notNull(rateParentId, "Rate parent id must not be null");
 		Assert.notNull(sort, "Sort info must not be null");
@@ -636,7 +634,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 		}
 
 		// Convert rate id set
-		Set<Long> rateIds = ServiceUtils.fetchProperty(topRates, RATE::getId);
+		Set<String> rateIds = ServiceUtils.fetchProperty(topRates, RATE::getId);
 
 		// Get direct children
 		List<RATE> directChildren = baseRateRepository.findAllByStatusAndParentIdIn(status, rateIds);
@@ -662,7 +660,7 @@ public abstract class BaseRateServiceImpl<RATE extends BaseRate> extends Abstrac
 		}
 
 		// Convert rate id set
-		Set<Long> rateIds = ServiceUtils.fetchProperty(topRates, RATE::getId);
+		Set<String> rateIds = ServiceUtils.fetchProperty(topRates, RATE::getId);
 
 		// Get direct children
 		List<RATE> directChildren = baseRateRepository.findAllByParentIdIn(rateIds);

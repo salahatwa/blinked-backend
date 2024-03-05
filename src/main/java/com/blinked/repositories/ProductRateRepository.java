@@ -41,7 +41,7 @@ public interface ProductRateRepository extends BaseRateRepository<ProductRate> {
 			+ "from ProductRate rate " + "where rate.parentId in ?1 " + "group by rate.parentId")
 	@NonNull
 	@Override
-	List<RateChildrenCountProjection> findDirectChildrenCount(@NonNull Collection<Long> rateIds);
+	List<RateChildrenCountProjection> findDirectChildrenCount(@NonNull Collection<String> rateIds);
 
 	
 	@Query("SELECT COUNT(id) FROM ProductRate WHERE ipAddress=?1 AND updateTime BETWEEN ?2 AND ?3 AND status <> 2")

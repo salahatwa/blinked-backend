@@ -1,10 +1,9 @@
 package com.blinked.entities;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UuidGenerator;
 
-import com.api.common.utils.CustomIdGenerator;
 import com.api.common.utils.ServiceUtils;
 import com.blinked.entities.enums.RateStatus;
 
@@ -13,8 +12,6 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
@@ -39,9 +36,8 @@ import lombok.ToString;
 public class BaseRate extends AuditUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id")
-	@GenericGenerator(name = "custom-id",type = CustomIdGenerator.class)
-	private Long id;
+	@UuidGenerator
+	private String id;
 
 	/**
 	 * Commentator's name.
@@ -126,14 +122,14 @@ public class BaseRate extends AuditUser {
 	 */
 	@Column(name = "parent_id")
 	@ColumnDefault("0")
-	private Long parentId;
+	private String parentId;
 
 	@Override
 	public void prePersist() {
 		super.prePersist();
 
-		if (ServiceUtils.isEmptyId(parentId)) {
-			parentId = 0L;
+		if (StringUtils.isBlank(parentId)) {
+			parentId = "";
 		}
 
 		if (ipAddress == null) {

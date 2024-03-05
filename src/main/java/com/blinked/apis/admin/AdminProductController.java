@@ -224,9 +224,9 @@ public class AdminProductController {
 				.ok(productRateService.pageTopRatesBy(productId, RateStatus.PUBLISHED, PageRequest.of(page, 10, sort)));
 	}
 
-	@GetMapping("{productId:\\d+}/rates/{rateParentId:\\d+}/children")
+	@GetMapping("{productId:\\d+}/rates/{rateParentId}/children")
 	public BaseResponse<List<BaseRateDTO>> listChildrenBy(@PathVariable("productId") Integer productId,
-			@PathVariable("rateParentId") Long rateParentId,
+			@PathVariable("rateParentId") String rateParentId,
 			@SortDefault(sort = "createTime", direction = DESC) Sort sort) {
 		// Find all children rates
 		List<ProductRate> productRates = productRateService.listChildrenBy(productId, rateParentId,

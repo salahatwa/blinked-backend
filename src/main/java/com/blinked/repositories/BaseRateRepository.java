@@ -26,7 +26,7 @@ import com.blinked.entities.projection.RateCountProjection;
  */
 @NoRepositoryBean
 public interface BaseRateRepository<RATE extends BaseRate>
-		extends BaseRepository<RATE, Long>, JpaSpecificationExecutor<RATE> {
+		extends BaseRepository<RATE, String>, JpaSpecificationExecutor<RATE> {
 
 	/**
 	 * Finds all rates by status.
@@ -102,7 +102,7 @@ public interface BaseRateRepository<RATE extends BaseRate>
 	 * @return a list of rate deleted
 	 */
 	@NonNull
-	List<RATE> deleteByParentId(@NonNull Long id);
+	List<RATE> deleteByParentId(@NonNull String id);
 
 	/**
 	 * Finds rates by product id, rate status.
@@ -138,7 +138,7 @@ public interface BaseRateRepository<RATE extends BaseRate>
 	@NonNull
 	@SensitiveConceal
 	List<RATE> findAllByProductIdAndStatusAndParentId(@NonNull Integer productId, @NonNull RateStatus status,
-			@NonNull Long parentId);
+			@NonNull String parentId);
 
 	/**
 	 * Finds rates by product id and parent id.
@@ -149,7 +149,7 @@ public interface BaseRateRepository<RATE extends BaseRate>
 	 */
 	@NonNull
 	@SensitiveConceal
-	List<RATE> findAllByProductIdAndParentId(@NonNull Integer productId, @NonNull Long parentId);
+	List<RATE> findAllByProductIdAndParentId(@NonNull Integer productId, @NonNull String parentId);
 
 	/**
 	 * Finds all rates by status and parent id collection.
@@ -160,7 +160,7 @@ public interface BaseRateRepository<RATE extends BaseRate>
 	 */
 	@NonNull
 	@SensitiveConceal
-	List<RATE> findAllByStatusAndParentIdIn(@NonNull RateStatus status, @NonNull Collection<Long> parentIds);
+	List<RATE> findAllByStatusAndParentIdIn(@NonNull RateStatus status, @NonNull Collection<String> parentIds);
 
 	/**
 	 * Finds all rates by parent id collection.
@@ -169,7 +169,7 @@ public interface BaseRateRepository<RATE extends BaseRate>
 	 * @return a list of rate
 	 */
 	@SensitiveConceal
-	List<RATE> findAllByParentIdIn(@NonNull Collection<Long> parentIds);
+	List<RATE> findAllByParentIdIn(@NonNull Collection<String> parentIds);
 
 	/**
 	 * Finds rates by product id, rate status and parent id.
@@ -182,7 +182,7 @@ public interface BaseRateRepository<RATE extends BaseRate>
 	 */
 	@NonNull
 	@SensitiveConceal
-	Page<RATE> findAllByProductIdAndStatusAndParentId(Integer productId, RateStatus status, Long parentId,
+	Page<RATE> findAllByProductIdAndStatusAndParentId(Integer productId, RateStatus status, String parentId,
 			Pageable pageable);
 
 	/**
@@ -194,5 +194,5 @@ public interface BaseRateRepository<RATE extends BaseRate>
 	@Query("select new com.blinked.entities.projection.RateChildrenCountProjection(count(rate.id), rate.parentId) "
 			+ "from BaseRate rate " + "where rate.parentId in ?1 " + "group by rate.parentId")
 	@NonNull
-	List<RateChildrenCountProjection> findDirectChildrenCount(@NonNull Collection<Long> rateIds);
+	List<RateChildrenCountProjection> findDirectChildrenCount(@NonNull Collection<String> rateIds);
 }

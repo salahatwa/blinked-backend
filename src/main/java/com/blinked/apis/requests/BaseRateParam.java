@@ -37,11 +37,11 @@ public abstract class BaseRateParam<RATE> implements InputConverter<RATE> {
 	@Size(max = 1023, message = "The character length of the rate content cannot exceed {max}")
 	private String content;
 
-	@Min(value = 1, message = "Post id must not be less than {value}")
+	@Min(value = 1, message = "Product id must not be less than {value}")
 	private Integer postId;
 
-	@Min(value = 0, message = "PostComment parent id must not be less than {value}")
-	private Long parentId = 0L;
+	@Min(value = 0, message = "Rate parent id must not be less than {value}")
+	private String parentId = "";
 
 	private Boolean allowNotification = true;
 

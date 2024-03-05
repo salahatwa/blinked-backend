@@ -16,5 +16,5 @@ public class RateChildrenCountProjection {
 
     private Long directChildrenCount;
 
-    private Long rateId;
+    private String rateId;
 }
